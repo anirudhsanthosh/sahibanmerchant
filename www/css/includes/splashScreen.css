@@ -1,0 +1,65 @@
+/* spalsh screen */
+
+.splashScreen{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    height: 100vh;
+    z-index: 100000;
+    padding:2rem;
+  }
+  
+  /* mainlogo svg animation */
+  
+  .main-logo-svg g{
+    stroke-width: 100px;
+  }
+  /* sahiban */
+  #lZpMxPWZZzWegbc5lAKQ2Z{
+    fill: rgba(0,0,0,0);
+    stroke-dasharray: 30000;
+    animation: animateSahiban 1.8s cubic-bezier(0.645,0.045, 0.355, 1) infinite alternate forwards;
+  }
+  /* merchant */
+  #l6UHGviPjVqPV7nD60EAmJz{
+    fill: rgba(0,0,0,0);
+    stroke-dasharray: 20000;
+    animation: animateMerchant 1.8s 0.0s cubic-bezier(0.645,0.045, 0.355, 1) infinite alternate  forwards;
+  }
+  
+  @keyframes animateSahiban {
+    0%{
+      stroke:rgb(1,164,79);
+      stroke-dashoffset: 30000;
+    }
+    70%{
+      stroke-dashoffset: 0;
+      stroke:rgb(1,164,79);
+      fill:rgba(1,164,79, 0);
+    }
+    100%{
+      fill:rgba(1,164,79,1);
+    }
+  }
+  
+  @keyframes animateMerchant {
+    0%{
+      stroke:rgb(237,29,35);
+      stroke-dashoffset: 30000;
+    }
+    70%{
+      stroke-dashoffset: 0;
+      stroke:rgb(237,29,35);
+      fill:rgba(237,29,35,0);
+    }
+    100%{
+      fill:rgba(237,29,35,1);
+    }
+  }
+  

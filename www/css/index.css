@@ -1,4 +1,21 @@
+@import "includes/slider.css";
+@import "includes/splashScreen.css";
+@import "includes/loader.css";
+@import "includes/home-page-category.css";
+
+*{
+  box-sizing: border-box;
+}
+
+/* main llogo */
+
 .main-logo{
     width:100%;
     
 }
+
+/*  offer container */
+.offfers{
+  padding: 0.5rem 0rem;
+}
+

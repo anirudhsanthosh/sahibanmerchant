@@ -44,7 +44,16 @@
         <splash src="res/screen/android/drawable-xxxhdpi/screen.png" density="port-xxxhdpi" /> 
 
          <preference name="ShowSplashScreenSpinner" value="false"/>
+         <preference name="AutoHideSplashScreen" value="false" />
+         <preference name="SplashScreenDelay" value="3000" />
          
+    </platform>
+    <platform name="browser">
+        <preference name="SplashScreen" value="img/screen.png" /> <!-- defaults to "/img/logo.png" -->
+        <preference name="AutoHideSplashScreen" value="false" /> <!-- defaults to "true" -->
+        
+        <preference name="SplashScreenBackgroundColor" value="#fff" /> <!-- defaults to "#464646" -->
+        <preference name="ShowSplashScreen" value="true" /> <!-- defaults to "true" -->
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
