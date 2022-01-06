@@ -1,0 +1,84 @@
+.reloader{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    height: 100vh;
+    z-index: 10000;
+    padding:2rem;
+}
+
+
+
+.reloader svg{
+    overflow: hidden ;
+    width: 100%;
+    height: calc(100%);
+  }
+
+  .reloader #leaf1{
+    transform-origin: center;
+    /* transform-box: fill-box; */
+    transform: translateX(10%);
+    animation: upAndDown 4s cubic-bezier(0.645,0.045, 0.355, 1) infinite forwards;
+ }
+ .reloader #leaf2{
+    transform-origin: center;
+    /* transform-box: fill-box; */
+    transform: translateX(10%);
+    animation: upAndDown 2s cubic-bezier(0.645,0.045, 0.355, 1) infinite forwards;
+ }
+ .reloader #leadGroup {
+    transform-origin: center;
+    /* transform-box: fill-box; */
+    transform: translateX(10%);
+    animation: sidewise 15s cubic-bezier(0.645,0.045, 0.355, 1) infinite forwards;
+ }
+
+ .reloader #leaf1Rotation {
+    transform-origin: center;
+    transform-box: fill-box;
+    transform: translateX(10%);
+    animation: rotate 3s cubic-bezier(0.645,0.045, 0.355, 1) infinite forwards;
+ }
+
+ 
+
+ @keyframes upAndDown {
+    0%{
+        transform: translateY(10%);
+    }
+    50%{
+        transform: translateY(-10%)
+    }
+    100%{
+       transform: translateY(10%);
+    }
+   
+}
+
+ @keyframes sidewise {
+     0%{
+         transform: translateX(40%);
+     }
+     100%{
+        transform: translateX(-80%);
+     }
+    
+}
+
+@keyframes rotate {
+     0%{
+         transform: rotate(0deg);
+     }
+     
+     100%{
+        transform: rotate(360deg);
+     }
+    
+}

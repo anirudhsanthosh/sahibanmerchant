@@ -1,5 +1,89 @@
-export {flexSlider,slider};
+export {flexSlider,slider,mockFlexSlider};
 
+class flexSlider{
+    #images;
+    #slider;
+    #sliderContainer;
+    #dotContainer;
+    #slideIndex = 0;
+    #slides;
+    #controllers;
+    #dots;
+
+
+    constructor(images = [],elementId = ""){
+        
+        if(!Array.isArray(images) || images.length ===0){
+            throw new Error('Unable to create slider instance, provide a valid arrray');
+        }
+        if(elementId.length ===0){
+                    throw new Error('Unable to create slider instance, provide a valid element');
+                }
+        this.#images = images;
+        try{
+            this.#slider = document.getElementById(elementId);
+        }
+        catch(e){
+            throw new Error('Unable to create slider instance, provide a valid element');
+        }
+        this.#slider.classList.add("flex-slider");
+        this.#slides = this.#images.map(imgSrc => this.#createSlides(imgSrc));
+        this.#slider.innerHTML = "";
+        this.#slides.map(slide=> this.#slider.appendChild(slide))
+
+    }
+
+    #createSlides(imgSrc){
+        let slide = document.createElement('div');
+        slide.classList.add('flex-slide');
+        let image = document.createElement('img');
+        image.src = imgSrc;
+        slide.appendChild(image);
+        return slide;
+    }
+}
+
+class mockFlexSlider{
+    #slider;
+    #slidesCount = 5;
+    #slides = [];
+
+
+    constructor(elementId = ""){
+        
+        
+        if(elementId.length ===0){
+                    throw new Error('Unable to create slider instance, provide a valid element');
+                }
+        
+        try{
+            this.#slider = document.getElementById(elementId);
+        }
+        catch(e){
+            throw new Error('Unable to create slider instance, provide a valid element');
+        }
+
+        this.#slider.classList.add("flex-slider");
+        for(let i=0; i<this.#slidesCount; i++){
+           this.#slides.push(this.#createSlides())
+        }
+        this.#slides.map(slide=> this.#slider.appendChild(slide))
+
+    }
+
+    #createSlides(){
+        let slide = document.createElement('div');
+        slide.classList.add('flex-slide');
+        let image = document.createElement('div');
+        let width = screen.availWidth * 0.7; // 70% of screen width
+        let height = 404/720*width;
+        image.style.width = `${width}px`;
+        image.style.height = `${height}px`;
+        image.classList.add('skelton-loader',"img");
+        slide.appendChild(image);
+        return slide;
+    }
+}
 
 export default class slider{
     #images;
@@ -128,44 +212,3 @@ export default class slider{
 
 }
 
-class flexSlider{
-    #images;
-    #slider;
-    #sliderContainer;
-    #dotContainer;
-    #slideIndex = 0;
-    #slides;
-    #controllers;
-    #dots;
-
-
-    constructor(images = [],elementId = ""){
-        console.log(images)
-        if(!Array.isArray(images) || images.length ===0){
-            throw new Error('Unable to create slider instance, provide a valid arrray');
-        }
-        if(elementId.length ===0){
-                    throw new Error('Unable to create slider instance, provide a valid element');
-                }
-        this.#images = images;
-        try{
-            this.#slider = document.getElementById(elementId);
-        }
-        catch(e){
-            throw new Error('Unable to create slider instance, provide a valid element');
-        }
-        this.#slider.classList.add("flex-slider");
-        this.#slides = this.#images.map(imgSrc => this.#createSlides(imgSrc));
-        this.#slides.map(slide=> this.#slider.appendChild(slide))
-
-    }
-
-    #createSlides(imgSrc){
-        let slide = document.createElement('div');
-        slide.classList.add('flex-slide');
-        let image = document.createElement('img');
-        image.src = imgSrc;
-        slide.appendChild(image);
-        return slide;
-    }
-}

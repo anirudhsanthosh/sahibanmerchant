@@ -29,25 +29,23 @@
     /* fill:rgb(255, 255, 255, 0); */
     transform-origin: center;
     opacity: 0;
-    animation: iconCircleAnimation 1.4s 1.4s cubic-bezier(0.645,0.045, 0.355, 1) infinite alternate forwards;
+    animation: iconCircleAnimation 1.4s 1.4s cubic-bezier(0.645,0.045, 0.355, 1) infinite forwards;
   }
   
   
   @keyframes iconCircleAnimation {
   0%{
-    /* fill:rgb(255, 255, 255, 0); */
-    /* stroke:rgb(243,130,33); */
-    /* stroke-dashoffset: 50000; */
-    /* opacity: 0; */
-    
+    opacity: 0;
   }
-  40%{
-    stroke-dashoffset: 0;
-    /* fill:rgb(255, 255, 255, 0); */
+  60%{
+    opacity:1;
+  }
+  70%{
+    opacity:1;
+    transform: scale(1);
   }
   100%{
-    /* fill:rgb(243,130,33,1); */
-    opacity:1;
+    transform: scale(0.1);
   }
   }
   #l1B2Al3tGD149AfrB0YlyPL path{
@@ -60,22 +58,34 @@
     0%{
       transform: translate(-50%, 0px);
     }
+    60%{
+      transform: translate(0%, 0px);
+    }
+    70%{
+      transform: translate(0%, 0px);
+    }
     100%{
-      transform: translate(1%, 0px);
+      transform: translate(120%, 0px);
     }
   }
   
   #lqLufP9Sd6Khzrm0onM6Ac path,#l4kn9DPJ6h9dgr3oRr7kzkw path{
     transform-origin: center;
-    animation:scaleLogo 1.4s cubic-bezier(0.645,0.045, 0.355, 1) infinite  forwards;;
+    animation:scaleLogo 1.4s cubic-bezier(0.645,0.045, 0.355, 1) infinite  forwards;
   }
   
   @keyframes scaleLogo{
     0%{
-      transform: scale(1.3)
+      transform: scale(1.3);
+    }
+    60%{
+      transform: scale(1) translate(0%, 0px);
+    }
+    70%{
+      transform: scale(1) translate(0%, 0px);
     }
     100%{
-      transform: scale(1)
+      transform: translate(120%, 0px);
     }
   }
   

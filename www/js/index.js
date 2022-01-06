@@ -1,14 +1,24 @@
 
-import {flexSlider, slider} from "./slider.js";
+import {flexSlider,mockFlexSlider} from "./slider.js";
 import {httpGetAsync,androidHttp,getWithBypassAES,getImage} from "./aesBypassing.js";
 import {get as httpGet}  from "./aesBypassing.js"  ; 
-import cratecategoryGrid  from "./categories.js";
+import {cratecategoryGrid,mockGrid}  from "./categories.js";
+import splash from "./includes/splashScreen.js";
+import loader from "./includes/loader.js";
+import reload from "./includes/reload.js";
 
 
 const SITE = "https://shoper.rf.gd";
 const API_URL = "http://shoper.rf.gd/wp-json/";
 const OFFER_NODE = "mam/v1/offers";
-const CATEGORIES_NODE = "wc/store/products/categories"
+const CATEGORIES_NODE = "wc/store/products/categories";
+
+
+
+// loaders
+let splashScreen = new splash();    
+let ajaxloader = new loader();
+let reloader = new reload();
 
 
 document.addEventListener("init", function (event) {
@@ -18,36 +28,20 @@ document.addEventListener("init", function (event) {
 ////////////// onsen ready event
   ons.ready(async () => {
 
-    let splashScreen = document.querySelector('.splashScreen');
-    splashScreen.onclick = function(e){
-      e.target.style.display = "none";
-    }
-    let loader = document.querySelector('.loader');
-    loader.onclick = function(e){
-      e.target.style.display = "none";
-    }
-    fetch('img/main_logo.svg')
-    .then(response=>response.text())
-    .then(logo=> splashScreen.innerHTML = logo)
-    .catch(err=>{
-      splashScreen.innerHTML = "Please wait... Loading....!"
-    });
-    fetch('img/main_icon.svg')
-        .then(response=>response.text())
-        .then(logo=> loader.innerHTML = logo)
-        .catch(err=>{
-          loader.innerHTML = "Please wait... Loading....!"
-        });
+    
     navigator.splashscreen.hide();
-  
+    
+    // building offer slider and category grid
     buildOfferSlider();
     showCategories()
+
+    reloader.hide();
+    ajaxloader.hide(); // hiding loader
+    setTimeout(()=>{
+    splashScreen.hide(); // hiding splashscreen animation
+    },2000);
   });
 
-  function hideSecondSplashScreen(){
-    let splashScreen = document.querySelector('.splashScreen');
-    splashScreen .style.display = "none";
-  }
 // replace images
 
 function replaceImages(data){
@@ -76,6 +70,10 @@ function replaceImages(data){
 // showing catagories
 
 async function showCategories(){
+
+  let categoryShowcase = document.getElementById('catagoriesShowcase');
+  let skeltonGridLoader = new mockGrid(categoryShowcase);
+  // return;
   let url = API_URL+CATEGORIES_NODE;
   let data =  new httpGet(url);
   data.then((response)=>{
@@ -86,28 +84,40 @@ async function showCategories(){
       data =  replaceImages(data)
       Promise.all(data).then(data=>{
         console.log("after",data)
-        let categoryShowcase = document.getElementById('catagoriesShowcase');
+        
         let categoriesDisplayer = new cratecategoryGrid(categoryShowcase,data);
-        // hideSecondSplashScreen();
+        
       })
       
     }catch(e){
       console.log(e)
+      reloader.show();
     }
     
   }).catch((e)=>{
     console.log("rejected")
     console.log(e);
+    reloader.show();
   })
   
 }
 
 // building slider in home page
 async function buildOfferSlider(){
+      let flexSliderElement ="offerSlider-flex";
+
+      // building skelton loader
+      let skeltonLoadwr = new mockFlexSlider(flexSliderElement);
+      
+      
+      //
       let bypassGet = new getWithBypassAES();
       let images = await bypassGet.get(API_URL+OFFER_NODE)
       .then(response=> JSON.parse(response.data))
-      .catch(err=>console.log("error in index.js",err));
+      .catch(err=>{
+        console.log("error in index.js",err);
+        reloader.show();
+      });
 
       console.log(images);
       images = images.map(async image =>{
@@ -128,9 +138,12 @@ async function buildOfferSlider(){
       
       Promise.all(newImages).then((newImages)=>{
         console.log(newImages);
-        let flexSliderElement ="offerSlider-flex";
         let flexOfferSlider = new flexSlider(newImages,flexSliderElement);
       })
+      })
+      .catch(err=>{
+        console.log(err);
+        reloader.show();
       })
       
     }

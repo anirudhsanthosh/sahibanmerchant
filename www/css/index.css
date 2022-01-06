@@ -2,6 +2,7 @@
 @import "includes/splashScreen.css";
 @import "includes/loader.css";
 @import "includes/home-page-category.css";
+@import "includes/reload.css";
 
 *{
   box-sizing: border-box;
@@ -18,4 +19,37 @@
 .offfers{
   padding: 0.5rem 0rem;
 }
+
+.skelton-loader{
+  display: block;
+  background: linear-gradient(90deg, transparent,rgba(255, 255, 255, 0.2), transparent),rgb(230, 230, 230);
+  background-repeat: repeat-y;        
+  background-size: 50px 200px;        
+  background-position: -100% -100%; 
+  animation: shine 1s infinite;	  
+
+}
+
+@keyframes shine {	
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+.skeleton-loader-gradient {
+
+  display: block;
+  /* background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray; */
+  background: linear-gradient(90deg, transparent,rgba(255, 255, 255, 0.2), transparent),rgb(219, 212, 212);
+  background-repeat: repeat-y;        
+  background-size: 50px 200px;        
+  background-position: -100% -100%;           
+}
+
 

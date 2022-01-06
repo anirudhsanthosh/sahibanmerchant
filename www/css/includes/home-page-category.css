@@ -5,32 +5,66 @@
     grid-auto-rows: 1fr;
   }
   
-  .categoryGrid a{
+  .categoryGrid a,.categoryGrid .a{
     /* position: relative; */
     padding :0.25rem;
+    text-decoration: none;
+    text-decoration-color: none;
   }
   .categoryCell{
     width: 100%;
     height:100%;
     
   }
-  .categoryCell img{
+  .categoryCell img, .categoryCell .img{
     width:100%;
     border-radius: 5px;
+    color:#fff;
+    text-transform: capitalize;
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
   }
-  .categoryCell .categoryHero{
+  .categoryCell .img{
+    height:calc(100vw*0.3);
+  }
+  .categoryCell .imgAlt{
+    height:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .categoryCell .categoryHero, .categoryCell .categoryHero-skelton{
     width:100%;
     text-align: center;
+    font-size: 70%;
+    
     text-transform: capitalize;
     position: absolute;
     bottom: 0px;
     left: 0px;
-    background: #28bb12;
+    background: #22b066;
     color:#FFFFFF;
     padding: 0.1rem;
     border-radius: 0px 0px 5px 5px;
     
   }
+
+  .categoryCell .categoryHero-skelton{
+    background: #868686!important;
+    padding:0.25rem;
+    display:flex;
+    justify-content: center;
+  }
+
+  .categoryCell .categoryHero-skelton .categoryHero-skelton-span{
+    width:70%;
+    height:0.2rem;
+
+  }
+
+
   .categoryCard{
     width:100%;
     height:100%;
