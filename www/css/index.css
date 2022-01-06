@@ -3,9 +3,10 @@
 @import "includes/loader.css";
 @import "includes/home-page-category.css";
 @import "includes/reload.css";
-
+@import "includes/bottom-navigation.css";
 *{
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 /* main llogo */

@@ -6,6 +6,7 @@ import {cratecategoryGrid,mockGrid}  from "./categories.js";
 import splash from "./includes/splashScreen.js";
 import loader from "./includes/loader.js";
 import reload from "./includes/reload.js";
+import bottomNavigator from "./includes/bottomNavigation.js";
 
 
 const SITE = "https://shoper.rf.gd";
@@ -19,6 +20,8 @@ const CATEGORIES_NODE = "wc/store/products/categories";
 let splashScreen = new splash();    
 let ajaxloader = new loader();
 let reloader = new reload();
+let bottomNav = new bottomNavigator(SITE)
+console.log(bottomNav)
 
 
 document.addEventListener("init", function (event) {
@@ -28,7 +31,6 @@ document.addEventListener("init", function (event) {
 ////////////// onsen ready event
   ons.ready(async () => {
 
-    
     navigator.splashscreen.hide();
     
     // building offer slider and category grid
@@ -65,8 +67,6 @@ function replaceImages(data){
 }
 
 
-
-
 // showing catagories
 
 async function showCategories(){
@@ -77,14 +77,10 @@ async function showCategories(){
   let url = API_URL+CATEGORIES_NODE;
   let data =  new httpGet(url);
   data.then((response)=>{
-    console.log("resolved : categories")
     try{
       let data = JSON.parse(response.data);
-      console.log("before",data);
       data =  replaceImages(data)
       Promise.all(data).then(data=>{
-        console.log("after",data)
-        
         let categoriesDisplayer = new cratecategoryGrid(categoryShowcase,data);
         
       })
@@ -105,12 +101,8 @@ async function showCategories(){
 // building slider in home page
 async function buildOfferSlider(){
       let flexSliderElement ="offerSlider-flex";
-
       // building skelton loader
       let skeltonLoadwr = new mockFlexSlider(flexSliderElement);
-      
-      
-      //
       let bypassGet = new getWithBypassAES();
       let images = await bypassGet.get(API_URL+OFFER_NODE)
       .then(response=> JSON.parse(response.data))
@@ -128,16 +120,13 @@ async function buildOfferSlider(){
       
       Promise.all(images).then((images)=>{
         
-        
         let newImages = images.map(async image => {
-        console.log(image);
         let newImage =  new getImage();
         let dataurl = await newImage.get(image);
         return dataurl;
       });
       
       Promise.all(newImages).then((newImages)=>{
-        console.log(newImages);
         let flexOfferSlider = new flexSlider(newImages,flexSliderElement);
       })
       })

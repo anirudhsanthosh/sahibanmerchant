@@ -1,0 +1,30 @@
+.bottomNav-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+.bottomNav-btn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: capitalize;
+    padding: 0.5rem;
+    color: #939393;
+}
+.bottom-bar {
+    height: fit-content!important;
+}
+
+.bottomNav-btn.active {
+    color: #22b066;
+}
+.bottomNav-btn span{
+    font-size: 65%;
+}
+.bottomNav-btn ons-icon{
+    font-size: 170%;
+}
