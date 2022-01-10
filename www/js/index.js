@@ -2,11 +2,13 @@
 import {flexSlider,mockFlexSlider} from "./slider.js";
 import {httpGetAsync,androidHttp,getWithBypassAES,getImage} from "./aesBypassing.js";
 import {get as httpGet}  from "./aesBypassing.js"  ; 
-import {cratecategoryGrid,mockGrid}  from "./categories.js";
+import {cratecategoryGrid,mockGrid,indexedCatagories,skeltonIndexedCategories}  from "./categories.js";
 import splash from "./includes/splashScreen.js";
 import loader from "./includes/loader.js";
 import reload from "./includes/reload.js";
 import bottomNavigator from "./includes/bottomNavigation.js";
+import browser from "./includes/inAppBrowser.js";
+
 
 
 const SITE = "https://shoper.rf.gd";
@@ -21,28 +23,111 @@ let splashScreen = new splash();
 let ajaxloader = new loader();
 let reloader = new reload();
 let bottomNav = new bottomNavigator(SITE)
-console.log(bottomNav)
+
+window.ajaxloader = ajaxloader;
+window.splashScreen = splashScreen;
+window.reloader = reloader;
+window.bottomNav = bottomNav;
+window.activeBrowser = null;
+window.activeNavigator = null;
+window.categories = [];
 
 
+// init event get called when a page is rendered
 document.addEventListener("init", function (event) {
-    console.log("init called");
+    console.log("init called",event);
+    switch (event.target.id) {
+      case "catagoriesPage":
+        let listHolder = document.getElementById("catagoriesPageDisplay");
+        
+        if(window.categories.length !== 0){
+        let catagoriesList = new indexedCatagories(listHolder,window.categories);
+        }
+        else{
+          let dummy = new skeltonIndexedCategories(listHolder);
+          document.addEventListener("categoriesDataParsed",(event)=>{
+            let catagoriesList = new indexedCatagories(listHolder,event.detail);
+          }) 
+        }
+        break;
+      case "searchPage":
+        let input = document.getElementById("search-input");
+        input.addEventListener('input', (e)=>{
+          console.log(e.target.value)
+        });
+
+        // when user hit go 
+        input.addEventListener('keypress', (e)=>{
+          if(e.key !== "Enter") return;
+          if(!input.value) return;
+          input.blur();
+          window.activeBrowser?.close?.();
+          window.activeBrowser = new browser(`https://shoper.rf.gd/?s=${input.value}&post_type=product`);
+         });
+
+        // when user hit go 
+        // input.addEventListener('change', (e)=>{
+
+        //   if(!input.value) return;
+        //   input.blur();
+        //   window.activeBrowser?.close?.();
+        //   window.activeBrowser = new browser(`https://shoper.rf.gd/?s=${input.value}&post_type=product`);
+        // });
+
+        // while user typing hide bottom nav
+        input.addEventListener('focus', (e)=>{
+          window.bottomNav.hide();
+        });
+        input.addEventListener('blur', (e)=>{
+          window.bottomNav.show();
+        });
+
+
+
+      break;
+      default:
+        break;
+    }
   });
 
-////////////// onsen ready event
-  ons.ready(async () => {
+document.addEventListener("load",(event)=>{
+  console.log("load called",event);
+})
 
+// divice ready event
+
+document.addEventListener("deviceready",(event)=>{
+  console.log("deviceready called",event);
+  ////////////// onsen ready event
+  ons.ready((e) => {
+    console.log("onsready called",e);
     navigator.splashscreen.hide();
     
     // building offer slider and category grid
     buildOfferSlider();
     showCategories()
+    // accesing ons navigator
+    window.activeNavigator = document.getElementById("navigator");
 
     reloader.hide();
     ajaxloader.hide(); // hiding loader
     setTimeout(()=>{
     splashScreen.hide(); // hiding splashscreen animation
     },2000);
+
+    // window.activeNavigator.bringPageTop('pages/catagories.html')
   });
+
+})
+
+// backbutton event
+document.addEventListener("backbutton",(event)=>{
+  if(window.ajaxloader.visible) {
+    event.preventDefault();
+    return;
+  }
+})
+
 
 // replace images
 
@@ -66,6 +151,24 @@ function replaceImages(data){
   return result;
 }
 
+// sort categories;
+
+function sortCatagories(data){
+  let all = [];
+  data.forEach(catagory =>{
+    if(!all[catagory.parent]) all[catagory.parent] =[];
+    all[catagory.parent].push(catagory);
+  })
+
+  return all;
+}
+
+function htmlDecode(input){
+  var e = document.createElement('textarea');
+  e.innerHTML = input;
+  // handle case of empty input
+  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+}
 
 // showing catagories
 
@@ -82,13 +185,21 @@ async function showCategories(){
       data =  replaceImages(data)
       Promise.all(data).then(data=>{
         let categoriesDisplayer = new cratecategoryGrid(categoryShowcase,data);
-        
+        window.categories = sortCatagories(data);
+        let categoryDataEvent = new CustomEvent('categoriesDataParsed', {
+          detail: window.categories,
+        });
+  
+        document.dispatchEvent(categoryDataEvent);
       })
+
+     
       
     }catch(e){
       console.log(e)
       reloader.show();
     }
+
     
   }).catch((e)=>{
     console.log("rejected")

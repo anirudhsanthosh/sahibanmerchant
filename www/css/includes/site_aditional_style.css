@@ -3,10 +3,16 @@
     color: #fff!important;
     display: none;
 }
-
+#wpadminbar{
+    display: none;
+}
+ul.products::before, ul.products::after {
+    content: "";
+    display: none;
+}
 ul.products, .wc-block-grid__products {
-    margin-left: 0;
-    margin-bottom: 0;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
     clear: both;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -16,10 +22,37 @@ ul.products, .wc-block-grid__products {
     padding: 0.5rem;
 }
 
+ul.products li.product .button {
+    display: none;
+}
+
+ul.products li.product .price {
+    margin-bottom: 0px;
+}
+
+ul.products li.product .woocommerce-loop-product__title {
+    font-size: 80%;
+    /* width: 100%; */
+    /* text-overflow: clip; */
+    /* overflow: hidden; */
+    font-weight: bold;
+}
+
+del span.woocommerce-Price-amount.amount bdi {
+    /* color: red; */
+    /* transform: scale(0.5); */
+    font-size: medium;
+}
+
+ul.products li.product img, ul.products .wc-block-grid__product img, .wc-block-grid__products li.product img, .wc-block-grid__products .wc-block-grid__product img {
+    /* display: block; */
+    margin: 0 auto 0.5rem;
+}
+
 ul.products li.product, ul.products .wc-block-grid__product, .wc-block-grid__products li.product, .wc-block-grid__products .wc-block-grid__product {
     list-style: none;
-    /* margin-left: 0; */
-    /* margin-bottom: 4.235801032em; */
+    margin-left: 0;
+    margin-bottom: 0;
     text-align: center;
     /* position: relative; */
     display: flex;
@@ -30,6 +63,28 @@ ul.products li.product, ul.products .wc-block-grid__product, .wc-block-grid__pro
     padding: 0.5rem;
     border-radius: 5px;
     box-shadow: 3px 9px 20px -15px black;
+}
+
+.onsale{
+    position: absolute;
+    top: 5%;
+    left: 0%;
+    background: #22b066;
+    border: #22b066;
+    font-size: 70%;
+    padding: 0.2rem 0.5rem;
+    color: #fff;
+    border-radius: 0px 5px 5px 0px;
+}
+
+span.woocommerce-Price-currencySymbol {
+    margin-right: 8px;
+}
+small.woocommerce-price-suffix {
+    display: none;
+}
+main#main {
+    padding: 1rem;
 }
 
 select {

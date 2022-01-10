@@ -1,5 +1,6 @@
  
- export{mockGrid,cratecategoryGrid}
+ import browser from "./includes/inAppBrowser.js";
+ export{mockGrid,cratecategoryGrid,indexedCatagories,skeltonIndexedCategories}
 
  const materialColors = [
   "#D32F2F",
@@ -12,6 +13,136 @@
   "#1565C0",
   "#0D47A1",
 ];
+function htmlDecode(input){
+  var e = document.createElement('textarea');
+  e.innerHTML = input;
+  // handle case of empty input
+  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+}
+
+class skeltonIndexedCategories{
+  constructor(displayElement){
+    displayElement.innerHTML = "";
+    let list = document.createElement("ons-list");
+    list.classList.add("skelton-list")
+
+    displayElement.appendChild(list);
+    for(let i=0;i<=5;i++){
+      let listItem = document.createElement("ons-list-item");
+      let name = document.createElement("div");
+      name.classList.add("center");
+      name.innerHTML= `<div class="skelton-loader skelton-name"></div>`;
+      listItem.appendChild(name);
+
+      // let src = element.image? element.image.src : "img/placeholder.svg";
+      let image = document.createElement("div");
+      image.classList.add("left");
+
+      image.innerHTML= `<div class="list-item__thumbnail skelton-loader skelton-image"></div>`;
+      listItem.appendChild(image);
+      list.appendChild(listItem);
+    }
+  }
+}
+
+class indexedCatagories{
+
+  constructor(displayElement,data){
+    displayElement.innerHTML = "";
+    let list = document.createElement("ons-list");
+    displayElement.appendChild(list);
+
+    // map through elements
+    data[0].map(element => {
+
+      let listItem = document.createElement("ons-list-item");
+      listItem.classList.add("catagoryList-main-item")
+
+      let name = document.createElement("div");
+      name.classList.add("center");
+      name.innerText= htmlDecode(element.name);
+      listItem.appendChild(name);
+
+      let src = element.image? element.image.src : "img/placeholder.svg";
+      let image = document.createElement("div");
+      image.classList.add("left");
+
+      image.innerHTML= `<img class="list-item__thumbnail" src="${src}">`;
+      listItem.appendChild(image);
+
+      if(data[element.id]){
+        listItem.setAttribute("expandable");
+        let customIcon = document.createElement("div");
+        customIcon.classList.add("right","aa");
+        customIcon.innerText = "...";
+        listItem.appendChild(customIcon);
+      }
+      else listItem.onclick = ()=>{
+        console.log("todo",htmlDecode(element.name),element.permalink);
+      }
+      
+     
+
+      if(data[element.id]){
+         let nestedList =  this.#createNestedTree(data,element.id);
+         listItem.appendChild(nestedList);
+      }
+      
+      list.appendChild(listItem);
+      // listItem.setAttribute("expandable");
+
+    });
+  }
+
+  #createNestedTree(data,index){
+    console.log(data[index]);
+    let div = document.createElement("div");
+    div.classList.add("expandable-content");
+    let list = document.createElement("ons-list");
+    div.appendChild(list);
+
+
+    data[index].forEach(element => {
+
+      let listItem = document.createElement("ons-list-item");
+
+      let name = document.createElement("div");
+      name.classList.add("center");
+      name.innerText= htmlDecode(element.name);
+      listItem.appendChild(name);
+
+      let src = element.image? element.image.src : "img/placeholder.svg";
+      let image = document.createElement("div");
+      image.classList.add("left");
+
+      image.innerHTML= `<img class="list-item__thumbnail" src="${src}">`;
+      listItem.appendChild(image);
+
+      if(data[element.id]){
+        listItem.setAttribute("expandable");
+        let customIcon = document.createElement("div");
+        customIcon.classList.add("right","aa");
+        customIcon.innerText = "...";
+        listItem.appendChild(customIcon);
+      }
+      else listItem.onclick = ()=>{
+        console.log("todo",htmlDecode(element.name),element.permalink);
+      }
+      
+
+      if(data[element.id]){
+        let nestedList =  this.#createNestedTree(data,element.id);
+        listItem.appendChild(nestedList);
+     }
+     list.appendChild(listItem)
+    });
+
+    return div;
+  }
+
+}
+
+
 
  export default class cratecategoryGrid{
   element;
@@ -29,7 +160,13 @@
     this.categoryTiles = this.list.map((category)=>{
     
       let ancher = document.createElement('a');
-      ancher.href = category.permalink;
+      // ancher.href = category.permalink;
+
+      ///// opening a new inapp browser and direct user to that
+      ancher.onclick = ()=>{
+        window.activeBrowser?.close?.(); // checking inapp browser instance exit or not if exixt close it first 
+        window.activeBrowser = new browser(category.permalink);
+      }
       
       let cell = document.createElement('div')
       ancher.appendChild(cell);
@@ -56,7 +193,7 @@
       
       cardText.classList.add('categoryHero')
       card.appendChild(cardText);
-      cardText.textContent = category.name
+      cardText.textContent = htmlDecode(category.name);
       
       container.appendChild(ancher);
       
@@ -71,6 +208,8 @@
     
   }
 }
+
+
 
 class mockGrid{
   #gridCount = 9;

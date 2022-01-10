@@ -75,3 +75,12 @@
     position: relative;
     
   }
+
+  .skelton-list{
+    /* background: #868686; */
+  }
+
+  .skelton-list .skelton-name{
+    width:70%;
+    height: .6rem;
+  }
