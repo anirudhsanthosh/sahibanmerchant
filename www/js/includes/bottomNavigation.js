@@ -19,8 +19,17 @@ export default class bottomNavigator{
             }
         },
         {
+            name : "search",
+            icon : "fa-search",//"md-shopping-cart",
+            active:false,
+            onclick: ()=>{
+                console.log("clicked");
+            }
+        },
+
+        {
             name : "cart",
-            icon : "md-shopping-cart",
+            icon : "fa-shopping-basket",//"md-shopping-cart",
             active:false,
             onclick: ()=>{
                 console.log("clicked");
@@ -28,7 +37,7 @@ export default class bottomNavigator{
         },
         {
             name : "account",
-            icon : "md-account-circle",
+            icon : "fa-user",//"md-account-circle",
             active:false,
             onclick: ()=>{
                 console.log("clicked");
