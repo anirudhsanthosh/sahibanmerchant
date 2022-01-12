@@ -10,6 +10,7 @@
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="https://shoper.rf.gd/*"/>
+    <allow-navigation href="https://localhost/*"/>
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

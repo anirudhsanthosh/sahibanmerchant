@@ -60,16 +60,7 @@
   padding: 0rem 0.25rem;
   color: #22b066;
 }
-/* styles for categorypage */
-.catagoryList-main-item{
-  font-weight: 400;
-  color:#22b066;
-  font-size: 120%;
-}
-#catagoriesPageDisplay{
-  padding-top: 3rem;
-}
-.list-item--material__thumbnail {
-  border: 1px solid rgba(0,0,0,0.1);
-  box-shadow: 2px 2px 20px -12px black;
+
+.page__content.page--material__content {
+  padding-bottom: 3.5rem;
 }
