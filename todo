@@ -1,9 +1,12 @@
 fix bottom navigation issue not working when mobile back button is pressed -fixed
 catagories page not loading when user navigates before the homepage categories are loaded -fixed
-ap closes when user press backbutton when ajax loader is active
+ap closes when user press backbutton when ajax loader is active -fixed
 
-search page
+search page 
 category page need to styled
 account page need to setup 
+
+search display page sorting cause multiple history 
+
 
 
