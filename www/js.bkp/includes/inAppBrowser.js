@@ -122,14 +122,14 @@ export default class browser{
                 // this.#browser?.close?.();
                 this.#browser?.hide();
                 window.activeBrowser = null;
-                window.activeBrowser = new browser("http://shoper.rf.gd/cart/");
+                window.activeBrowser = new browser("https://shoper.rf.gd/cart/");
                 // this.#browser?.close();
                 break;
             case "account":
                 // this.#browser?.close?.();
                 this.#browser?.hide();
                 window.activeBrowser = null;
-                window.activeBrowser = new browser("http://shoper.rf.gd/my-account/");
+                window.activeBrowser = new browser("https://shoper.rf.gd/my-account/");
                 // this.#browser?.close();
                 break;
                     

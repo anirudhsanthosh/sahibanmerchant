@@ -10,6 +10,7 @@
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="https://shoper.rf.gd/*"/>
+    <allow-navigation href="http://shoper.rf.gd/*"/>
     <allow-navigation href="https://localhost/*"/>
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -22,6 +23,15 @@
         <edit-config target="/manifest/application" mode="merge" file="app/src/main/AndroidManifest.xml">
             <application android:usesCleartextTraffic="true"/>
         </edit-config>
+        <!-- in your config.xml file -->
+
+        <!-- <resource-file src="res/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
+        <resource-file src="res/cas/cert.pem" target="app/src/main/res/cas/cert.pem" /> -->
+    
+        <!-- <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+        <application android:networkSecurityConfig="@xml/network_security_config" />
+        </edit-config> -->
+  
 
         <icon background="res/icon/android/mipmap-mdpi/ic_launcher_background.png" density="ldpi" foreground="res/icon/android/mipmap-mdpi/ic_launcher_foreground.png" />
         <icon background="res/icon/android/mipmap-mdpi/ic_launcher_background.png" density="mdpi" foreground="res/icon/android/mipmap-mdpi/ic_launcher_foreground.png" />

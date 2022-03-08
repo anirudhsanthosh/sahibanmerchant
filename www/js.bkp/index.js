@@ -11,7 +11,7 @@ import browser from "./includes/inAppBrowser.js";
 
 
 
-const SITE = "http://shoper.rf.gd";
+const SITE = "https://shoper.rf.gd";
 const API_URL = "http://shoper.rf.gd/wp-json/";
 const OFFER_NODE = "mam/v1/offers";
 const CATEGORIES_NODE = "wc/store/products/categories";
@@ -64,7 +64,7 @@ document.addEventListener("init", function (event) {
           // window.activeBrowser?.close?.();
           window.activeBrowser?.hide();
           window.activeBrowser = null;
-          window.activeBrowser = new browser(`http://shoper.rf.gd/?s=${input.value}&post_type=product`);
+          window.activeBrowser = new browser(`https://shoper.rf.gd/?s=${input.value}&post_type=product`);
          });
 
         // while user typing hide bottom nav

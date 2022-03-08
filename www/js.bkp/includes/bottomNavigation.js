@@ -66,7 +66,7 @@ export default class bottomNavigator{
                 // window.activeBrowser?.close?.();
                 window.activeBrowser?.hide();
                 window.activeBrowser = null;
-                window.activeBrowser = new browser("http://shoper.rf.gd/cart/");
+                window.activeBrowser = new browser("https://shoper.rf.gd/cart/");
             }
         },
         {
@@ -78,7 +78,7 @@ export default class bottomNavigator{
                 // window.activeBrowser?.close?.();
                 window.activeBrowser?.hide();
                 window.activeBrowser = null;
-                window.activeBrowser = new browser("http://shoper.rf.gd/my-account/");
+                window.activeBrowser = new browser("https://shoper.rf.gd/my-account/");
             }
         },
 
