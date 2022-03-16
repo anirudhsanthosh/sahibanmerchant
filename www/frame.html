@@ -17,7 +17,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        height: 90vh;
+        /* height: 90vh; */
         width: calc(90vh * 0.4713445995591477);
         z-index: -10;
       }
@@ -106,21 +106,82 @@
         color: #fff;
         box-shadow: 0px 18px 21px -10px rgb(0 0 0 / 50%);
       }
+      .right {
+        max-width: 40vw;
+      }
       @media (max-width: 700px) {
         .container {
           flex-direction: column;
         }
+        .right {
+          max-width: 100vw;
+        }
+      }
+
+      /* override */
+
+      .frame {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /* height: 90vh; */
+        width: 400px;
+        z-index: -10;
+      }
+      .content {
+        height: 720px;
+        width: 358px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50.4%, -49.5%);
+        border: 0px solid transparent;
+        border-radius: 10px;
+        overflow: visible;
+        opacity: 1;
+      }
+      .scalingDiv {
+        transform: scale(0.75);
+      }
+      .left {
+        position: relative;
+        width: 50vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .copyArea {
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        user-select: none;
+        opacity: 0;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="left">
-        <img class="frame" src="img/pixel x2 frame.png" />
-        <iframe scrolling="yes" class="content" src="/app/"> </iframe>
+        <div class="scalingDiv">
+          <img class="frame" src="img/pixel x2 frame.png" />
+          <iframe scrolling="yes" class="content" src="/app/"> </iframe>
+        </div>
       </div>
-      <div>
+      <div class="right">
         <h2 class="title">Sample Data</h2>
+        <div style="padding: 1rem 0rem">
+          <small
+            >You can use below data to login, you need to be logged in for
+            adding items to cart.</small
+          ><br /><br />
+          <small
+            >Sometimes the server will not be available for a short in that case
+            please try after some times, this is due to the shared hosting plan
+            🙏🏻</small
+          ><br />
+        </div>
         <div class="field">
           <h4><label>username</label> <span class="user">customer</span></h4>
           <button class="copy"></button>
@@ -159,6 +220,7 @@
         </div>
       </div>
     </div>
+    <textarea class="copyArea"></textarea>
     <script>
       const checkIcon = `<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                         width="405.272px" height="405.272px" viewBox="0 0 405.272 405.272" style="enable-background:new 0 0 405.272 405.272;"
@@ -189,10 +251,26 @@
                 /></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>`;
 
       function copy(text, callBack) {
-        navigator.clipboard
-          .writeText(text)
-          .then((e) => callBack())
-          .catch((e) => console.log(e));
+        if (navigator.clipboard) {
+          navigator.clipboard
+            .writeText(text)
+            .then((e) => {
+              callBack();
+              setupMockData();
+            })
+            .catch((e) => copyToClipboard(text, callBack));
+        } else {
+          copyToClipboard(text, callBack);
+        }
+      }
+
+      function copyToClipboard(text, callBack) {
+        const input = document.querySelector(".copyArea");
+        input.value = text;
+        input.select();
+        document.execCommand("copy");
+        callBack();
+        setupMockData();
       }
 
       window.onload = () => {
