@@ -21,6 +21,15 @@ export default class bottomNavigator {
     text.textContent = data.name;
 
     button.append(icon, text);
+
+    if (data.badge) {
+      let badge = document.createElement("span");
+      badge.id = data.badgeId;
+      badge.classList.add(data.badgeId);
+      badge.innerHTML = 0;
+      button.append(badge);
+    }
+
     button.onclick = () => {
       data.onclick();
     };

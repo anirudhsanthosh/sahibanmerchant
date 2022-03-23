@@ -1,8 +1,7 @@
-export default function loginView(onLoginButtonClick) {
+export default function LoginView(onLoginButtonClick) {
   const usernameInput = document.getElementById("username");
   const passwordInput = document.getElementById("password");
   const loginButton = document.getElementById("loginButton");
-  const messageNode = document.getElementById("loginMessage");
 
   loginButton.onclick = () => {
     const username = usernameInput.value;
@@ -10,10 +9,12 @@ export default function loginView(onLoginButtonClick) {
     onLoginButtonClick(username, password);
   };
 
-  function alert(message, color = "#000") {
-    messageNode.innerText = "";
-    messageNode.innerText = message;
-    messageNode.style.color = color;
-  }
   return alert;
+}
+
+export function alert(message, color = "#000") {
+  const messageNode = document.getElementById("loginMessage");
+  messageNode.innerText = "";
+  messageNode.innerText = message;
+  messageNode.style.color = color;
 }

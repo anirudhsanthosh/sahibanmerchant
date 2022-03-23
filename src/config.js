@@ -11,4 +11,6 @@ export const ONS_NAVIGATOR_ID = "navigator";
 export const PAGES = {
   home: "pages/home.html",
   login: "pages/login.html",
+  catagories: "pages/catagories.html",
+  search: "pages/search.html",
 };

@@ -1,14 +1,14 @@
 //views
-import mainView from "../view/mainView";
+import mainSkeltonView from "../../view/mainSkeltonView";
 
 //controllers
 import offerSlider from "./offerSliderController";
 import homepageCategoryShowcase from "./homePageCategoryController";
-import bottomNavigator from "./bottomNavigationController";
+import bottomNavigator from "../bottomNavigationController";
 
 export default function homepageController() {
-  // invoking main view skelton views
-  mainView();
+  // invoking skelton views
+  mainSkeltonView();
 
   // creating offer slider
   offerSlider();

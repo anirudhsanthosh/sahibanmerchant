@@ -1,7 +1,7 @@
-import getCategories from "../modal/categoryModal";
-import { HOMEPAGE_CATEGORY_SECTION_ID } from "../config";
+import getCategories from "../../modal/categoryModal";
+import { HOMEPAGE_CATEGORY_SECTION_ID } from "../../config";
 // views
-import { cratecategoryGrid } from "../view/components/categories";
+import { cratecategoryGrid } from "../../view/components/categories";
 
 export default async function offerSliderController() {
   const request = await getCategories();

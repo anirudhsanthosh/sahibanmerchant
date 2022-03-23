@@ -99,3 +99,14 @@ section h6 {
 .page__content.page--material__content {
   padding-bottom: 3.5rem;
 }
+
+span.cart-count {
+  position: absolute;
+  padding: 0.25rem;
+  background: #22b066;
+  color: #fff;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  top: 0.25rem;
+}
