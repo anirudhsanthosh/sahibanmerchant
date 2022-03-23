@@ -5,41 +5,70 @@
 @import "includes/reload.css";
 @import "includes/bottom-navigation.css";
 @import "includes/search.css";
-*{
+@import "includes/login.css";
+
+* {
   box-sizing: border-box;
   font-family: sans-serif;
 }
 
+section {
+  padding: 0.5rem;
+}
+
+.section-container {
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+section h5,
+section h6 {
+  margin-block-start: 0px !important;
+  margin-block-end: 0px !important;
+  font-weight: bold !important;
+  color: #22b066;
+  font-size: 90%;
+  padding: 0px 0.5rem !important;
+  padding-top: 0.25rem !important;
+}
+
+.page__content {
+  padding-bottom: 10vh;
+}
 /* main llogo */
 
-.main-logo{
-    width:100%;
-    
+.main-logo {
+  width: 100%;
 }
 
 /*  offer container */
-.offfers{
+.offfers {
   padding: 0.5rem 0rem;
 }
 
-.skelton-loader{
+.skelton-loader {
   display: block;
-  background: linear-gradient(90deg, transparent,rgba(255, 255, 255, 0.2), transparent),rgb(230, 230, 230);
-  background-repeat: repeat-y;        
-  background-size: 50px 200px;        
-  background-position: -100% -100%; 
-  animation: shine 1s infinite;	  
-
+  background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    ),
+    rgb(230, 230, 230);
+  background-repeat: repeat-y;
+  background-size: 50px 200px;
+  background-position: -100% -100%;
+  animation: shine 1s infinite;
 }
 
-@keyframes shine {	
+@keyframes shine {
   to {
     background-position: 100% 100%;
   }
 }
 
 .skeleton-loader-gradient {
-
   display: block;
   /* background: linear-gradient(
       to right,
@@ -48,13 +77,19 @@
       rgba(255, 255, 255, 0) 80%
     ),
     lightgray; */
-  background: linear-gradient(90deg, transparent,rgba(255, 255, 255, 0.2), transparent),rgb(219, 212, 212);
-  background-repeat: repeat-y;        
-  background-size: 50px 200px;        
-  background-position: -100% -100%;           
+  background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    ),
+    rgb(219, 212, 212);
+  background-repeat: repeat-y;
+  background-size: 50px 200px;
+  background-position: -100% -100%;
 }
 
-.toolbar-header{
+.toolbar-header {
   font-weight: bold;
   text-transform: capitalize;
   padding: 0rem 0.25rem;
