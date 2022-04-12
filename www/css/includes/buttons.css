@@ -1,0 +1,6 @@
+button.button.round-button {
+  width: 3em;
+  height: 3em;
+  border-radius: 100%;
+  background: #a3a3a373;
+}

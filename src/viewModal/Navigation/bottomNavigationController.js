@@ -1,7 +1,7 @@
-import bottomNavigationUi from "../view/components/bottomNavigation";
+import bottomNavigationUi from "../../view/components/bottomNavigation";
 import NavigationController from "./navigationController";
-import { PAGES } from "../config";
-const cartCountBadgeId = "cart-count";
+import { PAGES, cartCountBadgeId } from "../../config";
+import { createTextNode } from "../../utils/dom";
 
 const buttons = [
   {
@@ -50,28 +50,30 @@ const buttons = [
   {
     name: "cart",
     icon: "fa-shopping-basket", //"md-shopping-cart",
+    id: "cart",
     active: false,
-    indication: false,
+    indication: true,
     badge: true,
     badgeId: cartCountBadgeId,
 
     onclick: () => {
-      // window.activeBrowser?.close?.();
-      window.activeBrowser?.hide();
-      window.activeBrowser = null;
-      window.activeBrowser = new browser("http://shoper.rf.gd/cart/");
+      NavigationController.validateActiveNavigator();
+      window.activeNavigator.push(PAGES.cart).then((event) => {
+        console.log("page has pushed to top", event);
+      });
     },
   },
   {
     name: "account",
     icon: "fa-user", //"md-account-circle",
+    id: "account",
     active: false,
-    indication: false,
+    indication: true,
     onclick: () => {
-      // window.activeBrowser?.close?.();
-      window.activeBrowser?.hide();
-      window.activeBrowser = null;
-      window.activeBrowser = new browser("http://shoper.rf.gd/my-account/");
+      NavigationController.validateActiveNavigator();
+      window.activeNavigator.push(PAGES.account).then((event) => {
+        console.log("page has pushed to top", event);
+      });
     },
   },
 ];
@@ -82,5 +84,7 @@ export default function bottomNavigator() {
 
 export function updateCartCount(count) {
   if (!count || isNaN(count)) return;
-  return (document.getElementById(cartCountBadgeId).innerHTML = count);
+  document.getElementById(cartCountBadgeId).innerHTML = "";
+  document.getElementById(cartCountBadgeId).append(createTextNode(count));
+  return;
 }

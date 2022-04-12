@@ -1,30 +1,31 @@
 .bottomNav-container {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
 }
 .bottomNav-btn {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-transform: capitalize;
-    padding: 0.5rem;
-    color: #939393;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-transform: capitalize;
+  padding: 0.5rem;
+  color: #939393;
+  transition: all 0.2s;
 }
 .bottom-bar {
-    height: fit-content!important;
+  height: fit-content !important;
 }
 
 .bottomNav-btn.active {
-    color: #22b066;
+  color: #22b066;
 }
-.bottomNav-btn span{
-    font-size: 60%;
+.bottomNav-btn span {
+  font-size: 60%;
 }
-.bottomNav-btn ons-icon{
-    font-size: 150%;
+.bottomNav-btn ons-icon {
+  font-size: 150%;
 }

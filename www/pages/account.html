@@ -1,0 +1,39 @@
+<ons-page id="account">
+  <ons-toolbar id="account-toolbar">
+    <div class="left">
+      <!-- <div class="toolbar-header">account</div> -->
+      <img class="main-logo" src="img/header_logo.svg" />
+    </div>
+  </ons-toolbar>
+
+  <div id="account-display">
+    <section class="greeting-section">
+      <p class="greettings-message">Hello, <strong>Anirudh</strong></p>
+    </section>
+
+    <section>
+      <div class="section-container">
+        <h5>Account Settings</h5>
+        <div class="account-form">
+          <div class="form-control">
+            <label>First Name</label>
+            <input type="text" disabled />
+          </div>
+        </div>
+        <div class="form-actions">
+          <ons-button modifier="quiet" id="edit-account-details"
+            >Edit</ons-button
+          >
+          <ons-button modifier="quiet" id="save-account-details" class="d-none"
+            >Save</ons-button
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="bottom-drawer">
+      <a class="chip" id="orders-button">Orders</a>
+      <a class="chip" id="logout-button">Log out</a>
+    </section>
+  </div>
+</ons-page>

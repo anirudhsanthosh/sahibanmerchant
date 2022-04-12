@@ -26,6 +26,7 @@ function htmlDecode(input) {
 
 class skeltonIndexedCategories {
   constructor(displayElement) {
+    displayElement = document.getElementById(displayElement);
     displayElement.innerHTML = "";
     let list = document.createElement("ons-list");
     list.classList.add("skelton-list");

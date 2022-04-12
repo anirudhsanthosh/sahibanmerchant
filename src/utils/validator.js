@@ -5,3 +5,8 @@ export function isPassBasicValidation(str) {
   if (isEmpty(input)) return false;
   else return input;
 }
+
+export function isEmptyObject(obj) {
+  if (!obj.constructor === Object) return true;
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+}

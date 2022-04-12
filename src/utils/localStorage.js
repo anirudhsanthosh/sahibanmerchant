@@ -24,7 +24,16 @@ export default class storage {
     if (!newStringedObj) return false;
     return localStorage.setItem(this.#baseKey + key, newStringedObj);
   }
+
   static set(key, data) {
     return this.#set(key, data);
+  }
+
+  static #remove(key) {
+    return localStorage.removeItem(this.#baseKey + key);
+  }
+
+  static remove(key) {
+    return this.#remove(key);
   }
 }

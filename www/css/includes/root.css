@@ -1,0 +1,52 @@
+@font-face {
+  font-family: "Popins";
+  font-style: normal;
+  font-weight: 200;
+  src: local("Popins"), local("Popins"),
+    url(./fonts/Poppins-ExtraLight.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Popins";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Popins"), local("Popins"),
+    url(./fonts/Poppins-Light.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Popins";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Popins"), local("Popins"),
+    url(./fonts/Poppins-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Popins";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Popins"), local("Popins"),
+    url(./fonts/Poppins-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Popins";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Popins"), local("Popins"),
+    url(./fonts/Poppins-Bold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Popins";
+  font-style: normal;
+  font-weight: bold;
+  src: local("Popins"), local("Popins"),
+    url(./fonts/Poppins-Bold.ttf) format("truetype");
+}
+
+:root {
+  --theme-color: #22b066;
+  --elevated-shadow: 0px 2px 13px -6px rgb(0 0 0 / 46%);
+  --product-card-shadow: 0px 2px 7px -6px rgb(0 0 0 / 46%);
+}
+
+* {
+  font-family: Popins, sans-serif, Roboto;
+}

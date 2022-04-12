@@ -1,5 +1,5 @@
-import { API_URL, SITE, CART_NODE } from "../config";
-import storage from "../utils/localStorage";
+import { API_URL, SITE, CART_NODE } from "../../config";
+import storage from "../../utils/localStorage";
 export default class cart {
   static #countKey = "CART-COUNT";
   static #cartKey = "CART";
@@ -7,7 +7,7 @@ export default class cart {
   static async get(auth) {
     try {
       const url = SITE + API_URL + CART_NODE;
-      console.log(url);
+
       const data = await axios.get(url, {
         headers: {
           ...auth,
@@ -22,7 +22,13 @@ export default class cart {
     }
   }
 
+  static setCartItemCount(itemCount = 0) {
+    return storage.set(this.#countKey, itemCount);
+  }
   static getCartItemCount() {
+    return storage.get(this.#countKey);
+  }
+  static getCachedCartItemCount() {
     return storage.get(this.#countKey);
   }
 

@@ -9,13 +9,20 @@ export default class Navigator {
     }
   }
 
-  push(page) {
-    return this.#navigator.bringPageTop(page);
+  push(page, options = {}) {
+    return this.#navigator.bringPageTop(page, options);
   }
-  pop() {
-    return this.#navigator.popPage();
+  pop(options = {}) {
+    return this.#navigator.popPage(options);
   }
-  reset(page) {
-    if (page) return this.#navigator.resetToPage(page);
+  reset(page, options = {}) {
+    if (page) return this.#navigator.resetToPage(page, options);
+  }
+
+  get topPage() {
+    return this.#navigator.topPage;
+  }
+  get pages() {
+    return this.#navigator.pages;
   }
 }

@@ -6,5 +6,6 @@ export default function mainSkeltonView(event) {
   new mockFlexSlider(flexSliderElement);
   // category skelton
   let categoryShowcase = document.getElementById("catagoriesShowcase");
-  new mockGrid(categoryShowcase);
+  if (categoryShowcase) categoryShowcase.parentElement.remove();
+  // new mockGrid(categoryShowcase);
 }

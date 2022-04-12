@@ -1,7 +1,9 @@
 export { flexSlider, slider, mockFlexSlider };
 
+class simpleSlider {}
+
 class flexSlider {
-  #images;
+  #argumentSlides;
   #slider;
   #sliderContainer;
   #dotContainer;
@@ -10,8 +12,8 @@ class flexSlider {
   #controllers;
   #dots;
 
-  constructor(images = [], elementId = "") {
-    if (!Array.isArray(images) || images.length === 0) {
+  constructor(slides = [], elementId = "") {
+    if (!Array.isArray(slides) || slides.length === 0) {
       throw new Error(
         "Unable to create slider instance, provide a valid arrray"
       );
@@ -21,7 +23,7 @@ class flexSlider {
         "Unable to create slider instance, provide a valid element"
       );
     }
-    this.#images = images;
+    this.#argumentSlides = slides;
     try {
       this.#slider = document.getElementById(elementId);
     } catch (e) {
@@ -30,17 +32,21 @@ class flexSlider {
       );
     }
     this.#slider.classList.add("flex-slider");
-    this.#slides = this.#images.map((imgSrc) => this.#createSlides(imgSrc));
+    this.#slides = this.#argumentSlides.map((slide) =>
+      this.#createSlides(slide)
+    );
     this.#slider.innerHTML = "";
     this.#slides.map((slide) => this.#slider.appendChild(slide));
   }
 
-  #createSlides(imgSrc) {
+  #createSlides(config) {
     let slide = document.createElement("div");
     slide.classList.add("flex-slide");
     let image = document.createElement("img");
-    image.src = imgSrc;
+    image.src = config.image;
+    image.setAttribute("loading", "lazy");
     slide.appendChild(image);
+    slide.onclick = () => config.onClick();
     return slide;
   }
 }

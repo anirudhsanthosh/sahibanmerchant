@@ -1,12 +1,11 @@
-import loginController from "./loginController";
-import { ONS_NAVIGATOR_ID } from "../config";
+import loginController from "./Login/loginController";
+import { ONS_NAVIGATOR_ID, PAGES } from "../config";
 import Navigator from "../service/navigator";
+import NavigationController from "./Navigation/navigationController";
+
 export default function onsReady(e) {
   // hiding cordobva splashscreen
   window.navigator.splashscreen.hide();
-
-  // accesing ons navigator and populating window obj
-  window.activeNavigator = new Navigator(ONS_NAVIGATOR_ID); //document.getElementById("navigator");
 
   // disabling ons backbuton handler
   ons.disableDeviceBackButtonHandler();
@@ -15,7 +14,7 @@ export default function onsReady(e) {
   document.addEventListener("backbutton", (event) => {
     if (window.ajaxloader.visible) {
       event.preventDefault();
-      console.log("not closing");
+      // console.log("not closing");
       return;
     }
 
@@ -29,6 +28,9 @@ export default function onsReady(e) {
     window.splashscreen.hide(); // hiding splashscreen animation
   }, 2000);
 
-  // invoking login controller
-  loginController();
+  // accesing ons navigator and populating window obj
+  window.activeNavigator = new Navigator(ONS_NAVIGATOR_ID);
+
+  // goto loginPage
+  NavigationController.resetToLogin();
 }

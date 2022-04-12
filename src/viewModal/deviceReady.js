@@ -3,8 +3,16 @@ import Splash from "../view/components/splashScreen";
 import Loader from "../view/components/loader";
 import ReloadApp from "../view/components/reload";
 
+// importing controllers
+import categoryPageController from "./CategoriesPage/CategoriesPageController";
+import loginController from "./Login/loginController";
+import searchController from "./Search/searchController";
+import homepageController from "./HomePage/homePageContrloler";
+import cartController from "./Cart/cartController";
+import accountController from "./Account/accountPageController";
+
 export default function deviceReady(event) {
-  console.log("deviceready called", event);
+  // console.log("deviceready called", event);
 
   //// lock portrate mode
   window.screen.orientation.lock("portrait");
@@ -13,11 +21,42 @@ export default function deviceReady(event) {
   window.splashscreen = new Splash();
   window.ajaxloader = new Loader();
   window.reloader = new ReloadApp();
-  window.cart = null;
-  window.user = null;
+  window.store = {
+    categories: [],
+    cart: {},
+    user: {},
+    sliderOffer: [],
+    searchHistory: [],
+  };
 
   window.activeNavigator = null;
-  window.categories = [];
+
+  // init event get called when a page is rendered
+  document.addEventListener("init", function (event) {
+    // console.log("init called ", event);
+    switch (event.target.id) {
+      case "home":
+        homepageController();
+        break;
+      case "catagoriesPage":
+        categoryPageController();
+        break;
+      case "login":
+        loginController();
+        break;
+      case "searchPage":
+        searchController();
+        break;
+      case "cart":
+        cartController();
+        break;
+      case "account":
+        accountController();
+        break;
+      default:
+        break;
+    }
+  });
 
   // attaching onsReady event
   ons.ready((e) => onsReady(e));

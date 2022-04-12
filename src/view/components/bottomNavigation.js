@@ -5,6 +5,7 @@ export default class bottomNavigator {
   #buttons;
 
   constructor(buttons) {
+    this.#element.innerHTML = "";
     this.#buttons = buttons;
     this.#buttons.map((button) => this.#createButton(button));
   }
@@ -36,6 +37,7 @@ export default class bottomNavigator {
 
     document.addEventListener("postpush", (event) => {
       if (event.enterPage.id !== data.id) return;
+      console.log(data.indication);
       if (data.indication) {
         Array.from(this.#element.children).map((button) =>
           button.classList.remove("active")

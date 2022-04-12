@@ -87,7 +87,7 @@ document.addEventListener("init", function (event) {
     default:
       break;
   }
-});
+}); 
 
 document.addEventListener("load", (event) => {
   console.log("load called", event);

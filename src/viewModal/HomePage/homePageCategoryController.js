@@ -1,4 +1,4 @@
-import getCategories from "../../modal/categoryModal";
+import getCategories from "../../modal/categoryModal-copy";
 import { HOMEPAGE_CATEGORY_SECTION_ID } from "../../config";
 // views
 import { cratecategoryGrid } from "../../view/components/categories";
