@@ -5,6 +5,8 @@ import {
   PRODUCT_REQUEST_ORDER_FIELDS,
 } from "../../config";
 
+import productController from "../Product/ProductController";
+
 import ProductsModal from "../../modal/products/productsModal";
 import UserModal from "../../modal/user/userModal";
 
@@ -193,7 +195,10 @@ export default class ProductsController {
 
     return products.map((product) => {
       const gotoProductPage = () => {
-        console.log(product);
+        const config = {
+          product,
+        };
+        new productController(config);
       };
 
       // config for product

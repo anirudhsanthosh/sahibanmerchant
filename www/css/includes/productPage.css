@@ -1,0 +1,215 @@
+/* product page header 
+ */
+
+.product-header {
+  position: sticky;
+  top: 0px;
+  /* background: #fff; */
+  /* box-shadow: 0px 0px 1px rgb(0 0 0 / 30%); */
+  padding: 0.25rem;
+  z-index: 2;
+}
+/* image container */
+
+/* featured product  */
+
+span.featured-product-label {
+  position: absolute;
+  top: 2rem;
+  right: 0rem;
+  padding: 0.25rem 0.5rem;
+  background: #22b066;
+  color: #fff;
+  /* font-weight: 700; */
+  border-radius: 10px 0px 0px 10px;
+  transform: translateX(6rem);
+  animation: slideLeft 0.5s ease-in-out forwards;
+  font-size: 70%;
+}
+
+@keyframes slideLeft {
+  0% {
+    transform: translateX(6rem);
+  }
+  100% {
+    transform: translateX(0rem);
+  }
+}
+
+/* info container  */
+
+.product-info-container {
+  padding-top: 0.5rem;
+}
+
+h1.product-name {
+  font-weight: 400;
+  font-size: 130%;
+  padding: 1rem;
+  margin: 0;
+}
+
+/* price */
+.price-container h2 {
+  margin: 0px;
+}
+.product-info-container .price-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0rem 1rem;
+}
+
+.product-info-container > div > h2.product-price-regular {
+  color: #b9b9b9;
+  font-size: 120%;
+  text-decoration: line-through;
+}
+
+.product-info-container .product-price-selling {
+  font-size: 150%;
+  font-weight: 700;
+}
+.product-info-container .product-price-selling:before {
+  content: "₹";
+  font-family: roboto;
+  padding-right: 0.1rem;
+}
+
+.product-info-container .product-price-offer {
+  /* padding: 0.25rem 0.5rem; */
+  /* background: var(--theme-color); */
+  color: #22b066;
+  border-radius: 10px;
+  font-size: 80%;
+}
+.product-info-container .product-price-offer:after {
+  content: "% off";
+}
+
+/* description */
+.details-container {
+  margin: 1rem 0rem;
+}
+
+.details-container h3 {
+  font-size: 100%;
+  font-weight: bold;
+  margin: 0;
+  padding: 0.5rem 0rem;
+}
+/* short description  */
+.short-description-container {
+  padding: 0rem 0rem;
+  box-shadow: 0px 2px 13px -6px rgb(0 0 0 / 46%);
+  /* box-shadow: 0px 0px 3px -1px #00000061; */
+}
+
+h3.short-description-label {
+  padding: 1rem 1rem;
+  box-shadow: 0px 1px 1px 0px rgb(0 0 0 / 10%);
+
+  /* box-shadow: 0px 0px 1px 0px #0000005c; */
+}
+
+.short-description ul {
+  padding-inline-start: 1rem;
+}
+
+/* product description */
+.description-container {
+  margin: 2rem 0rem;
+
+  padding: 0rem 0rem;
+  box-shadow: 0px 2px 13px -6px rgb(0 0 0 / 46%);
+  /* box-shadow: 0px 0px 3px -1px #00000061; */
+}
+h3.description-label {
+  padding: 1rem 1rem;
+  box-shadow: 0px 1px 1px 0px rgb(0 0 0 / 10%);
+  /* box-shadow: 0px 0px 1px 0px #0000005c; */
+}
+
+div.description,
+div.short-description {
+  pointer-events: none;
+  padding: 1rem;
+}
+
+div.description a,
+.short-description a {
+  pointer-events: none;
+  color: inherit;
+  text-decoration: none;
+}
+div.description img,
+.short-description img {
+  width: 90%;
+  height: auto;
+  display: block;
+  margin: 0.5rem auto;
+}
+
+/* add to cart container  */
+.add-to-cart-container {
+  padding: 1rem;
+  position: sticky;
+  bottom: 0px;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 13px -6px rgb(0 0 0 / 46%);
+}
+
+button.add-to-cart-button {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid var(--theme-color);
+  background: var(--theme-color);
+  color: #fff;
+  /* font-weight: 700; */
+  text-transform: uppercase;
+  font-size: 110%;
+  box-shadow: var(--elevated-shadow);
+  transition: all 0.3s ease-in;
+}
+button.add-to-cart-button:focus {
+  outline: none;
+  box-shadow: 0px 5px 13px -3px rgb(0 0 0 / 46%);
+}
+button.add-to-cart-button[disabled] {
+  background: #aaa;
+  border: 1px solid #aaa;
+}
+span.product-unavailable {
+  text-align: center;
+  display: block;
+  padding: 0.25rem;
+  color: red;
+}
+
+/* products page categoriew  */
+
+h3.product-page-category-title {
+  padding: 1rem;
+  /* box-shadow: 0px 1px 1px 0px rgb(0 0 0 / 10%); */
+  /* box-shadow: 0px 0px 1px 0px #0000005c; */
+  font-weight: 700;
+  margin: 0;
+  font-size: 100%;
+}
+
+.product-page-categories-Container {
+  padding: 0rem 0rem;
+  box-shadow: 0px 2px 13px -6px rgb(0 0 0 / 46%);
+  /* box-shadow: 0px 0px 3px -1px #00000061; */
+  margin-bottom: 1rem;
+}
+
+.product-page-category-body {
+  display: flex;
+  padding: 0rem 1rem;
+  padding-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

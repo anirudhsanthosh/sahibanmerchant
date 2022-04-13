@@ -53,6 +53,7 @@
     ]
   },
   "dependencies": {
+    "@splidejs/splide": "^4.0.1",
     "onsenui": "^2.11.2",
     "validator": "^13.7.0"
   }

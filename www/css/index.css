@@ -14,6 +14,9 @@
 @import "includes/products.css";
 @import "includes/buttons.css";
 @import "includes/products-display-page.css";
+@import "includes/splide.min.css";
+@import "includes/splideOverrides.css";
+@import "includes/productPage.css";
 
 * {
   box-sizing: border-box;

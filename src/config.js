@@ -7,6 +7,7 @@ export const API_URL = "wp-json/";
 export const LOGIN_NODE = "wp/v2/app/verify-user"; //"cocart/v2/login/";
 export const CART_NODE = "cocart/v2/cart/";
 export const PRODUCTS_NODE = "wc/store/products";
+export const PRODUCT_NODE = "cocart/v2/products/";
 
 //global
 export const ONS_NAVIGATOR_ID = "navigator";

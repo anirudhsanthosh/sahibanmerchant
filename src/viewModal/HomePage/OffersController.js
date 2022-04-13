@@ -1,6 +1,7 @@
 import { HOMEPAGE_CONTENT_ELEMENT_SELECTOR } from "../../config";
 import OffersModal from "../../modal/offers/OffersModal";
 import ProductsController from "../Products/ProductsController";
+import ProductController from "../Product/ProductController";
 
 //modal
 import CategoriesModal from "../../modal/categories/categoriesModal";
@@ -113,7 +114,10 @@ function formatProductForProductCard(products) {
 
   return products.map((product) => {
     const gotoProductPage = () => {
-      console.log(product);
+      const config = {
+        product,
+      };
+      const productController = new ProductController(config);
     };
 
     // config for product
@@ -121,10 +125,14 @@ function formatProductForProductCard(products) {
     const regularPrice =
       product.type === "variable"
         ? product.variable_price.max_price
-        : product.regular_price;
+        : product.on_sale
+        ? product.regular_price
+        : "";
     const selePrice =
       product.type === "variable"
         ? product.variable_price.min_price
+        : product.sale_price === ""
+        ? product.price
         : product.sale_price;
     const discountInPercentage =
       100 - Math.floor((selePrice / regularPrice) * 100);
