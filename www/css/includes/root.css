@@ -43,6 +43,7 @@
 
 :root {
   --theme-color: #22b066;
+  --theme-selection-color: #22b06661;
   --elevated-shadow: 0px 2px 13px -6px rgb(0 0 0 / 46%);
   --product-card-shadow: 0px 2px 7px -6px rgb(0 0 0 / 46%);
 }

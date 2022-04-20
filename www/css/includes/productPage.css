@@ -36,6 +36,11 @@ span.featured-product-label {
   }
 }
 
+/*specifications*/
+ul.specification-body {
+  padding-left: 2rem;
+}
+
 /* info container  */
 
 .product-info-container {
@@ -117,21 +122,25 @@ h3.short-description-label {
 }
 
 /* product description */
-.description-container {
+.description-container,
+.specification-container {
   margin: 2rem 0rem;
 
   padding: 0rem 0rem;
   box-shadow: 0px 2px 13px -6px rgb(0 0 0 / 46%);
   /* box-shadow: 0px 0px 3px -1px #00000061; */
 }
-h3.description-label {
+h3.description-label,
+h3.specification-label,
+h3.variation-container-label {
   padding: 1rem 1rem;
   box-shadow: 0px 1px 1px 0px rgb(0 0 0 / 10%);
   /* box-shadow: 0px 0px 1px 0px #0000005c; */
 }
 
 div.description,
-div.short-description {
+div.short-description,
+.specification-body {
   pointer-events: none;
   padding: 1rem;
 }
@@ -212,4 +221,70 @@ h3.product-page-category-title {
   padding-bottom: 1rem;
   flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+/* variation card */
+.variation-body.flex-slider {
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+.variation-card {
+  max-width: 25vw;
+  min-width: 33%;
+  /* width: 40%; */
+  padding: 0.25rem;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  box-shadow: var(--product-card-shadow);
+}
+.variation-card-price-container {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.variation-card-regular-price {
+  color: #aaa;
+  font-size: 70%;
+  text-decoration: line-through;
+}
+
+img.variation-card-image {
+  width: 50%;
+}
+
+.variation-card-sale-price:before {
+  content: "₹";
+  font-family: roboto;
+  padding-right: 0.1rem;
+}
+.variation-card-sale-price {
+  font-size: 90%;
+  font-weight: 700;
+}
+.variation-card-discount {
+  /* padding: 0.25rem 0.5rem; */
+  /* background: var(--theme-color); */
+  color: #22b066;
+  border-radius: 10px;
+  font-size: 70%;
+}
+
+.variation-card-discount:after {
+  content: "% off";
+}
+.variation-card-attribute {
+  font-size: 80%;
+}
+.variation-card-attribute-container {
+  /* display: flex; */
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.variation-card.active {
+  border-color: var(--theme-color);
+  background: #22b06661;
 }

@@ -83,7 +83,8 @@ export default function bottomNavigator() {
 }
 
 export function updateCartCount(count) {
-  if (!count || isNaN(count)) return;
+  if (count === "" || count === undefined || count === null || isNaN(count))
+    return;
   document.getElementById(cartCountBadgeId).innerHTML = "";
   document.getElementById(cartCountBadgeId).append(createTextNode(count));
   return;

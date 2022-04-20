@@ -27,5 +27,8 @@ export default function MainDataController(data) {
 
   if (data?.data?.categories) categoriesModal.set(data?.data?.categories);
 
+  //nonce
+  if (data?.data?.store_nonce) userModal.setNonce(data?.data?.store_nonce);
+
   return true;
 }

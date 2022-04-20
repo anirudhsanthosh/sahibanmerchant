@@ -9,6 +9,7 @@ export default class userModal {
   static #baseKey = "USER--";
   static #authKey = this.#baseKey + "AUTH";
   static #basicDetail = this.#baseKey + "DETAILS";
+  static #nonce = this.#baseKey + "NONCE";
 
   static get() {
     return storage.get(this.#basicDetail);
@@ -34,5 +35,13 @@ export default class userModal {
       Authorization:
         "Basic " + btoa(`${userAuth.username}:${userAuth.password}`),
     };
+  }
+
+  static setNonce(nonce) {
+    if (isEmptyObject(nonce)) return storage.remove(this.#nonce);
+    return storage.set(this.#nonce, nonce);
+  }
+  static getNonce() {
+    return storage.get(this.#nonce);
   }
 }

@@ -2,6 +2,7 @@ import onsReady from "./onsReady";
 import Splash from "../view/components/splashScreen";
 import Loader from "../view/components/loader";
 import ReloadApp from "../view/components/reload";
+import { changeSite } from "../config";
 
 // importing controllers
 import categoryPageController from "./CategoriesPage/CategoriesPageController";
@@ -13,8 +14,11 @@ import accountController from "./Account/accountPageController";
 
 export default function deviceReady(event) {
   // console.log("deviceready called", event);
-
-  //// lock portrate mode
+  if (cordova.platformId === "android") {
+    let sign = prompt("enter ip");
+    if (sign) changeSite(sign);
+  }
+  // lock portrate mode
   window.screen.orientation.lock("portrait");
 
   // populating window object with some global components
@@ -48,7 +52,7 @@ export default function deviceReady(event) {
         searchController();
         break;
       case "cart":
-        cartController();
+        window.store.Cart = new cartController();
         break;
       case "account":
         accountController();

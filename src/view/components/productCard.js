@@ -1,4 +1,5 @@
 import { createElement, createTextNode } from "../../utils/dom";
+import { formatNumber } from "../../utils/sanitize";
 
 /**
  *
@@ -10,6 +11,7 @@ import { createElement, createTextNode } from "../../utils/dom";
 
 export default function productCard(config = {}) {
   const {
+    type,
     title,
     onSale,
     regularPrice,
@@ -42,21 +44,29 @@ export default function productCard(config = {}) {
 
   // regular price
   if (regularPrice !== selePrice) {
-    const cardPriceRegular = createPrice(regularPrice, [
-      "product-card-price-regular",
-    ]);
+    const cardPriceRegular =
+      type === "variable"
+        ? createPrice(formatNumber(regularPrice), ["product-card-price-sale"])
+        : createPrice(formatNumber(regularPrice), [
+            "product-card-price-regular",
+          ]);
 
     cardPrice.appendChild(cardPriceRegular);
   }
+  if (onSale && type === "variable") {
+    cardPrice.appendChild(createTextNode(" - "));
+  }
 
-  const cardPriceSale = createPrice(selePrice, ["product-card-price-sale"]);
+  const cardPriceSale = createPrice(formatNumber(selePrice), [
+    "product-card-price-sale",
+  ]);
   cardPrice.appendChild(cardPriceSale);
 
   // appending card body content
   cardBody.append(cardTitle, cardPrice);
 
   // discount
-  if (onSale) {
+  if (onSale && type !== "variable") {
     const cardDiscount = createElement("div", ["product-card-discount"]);
     cardDiscount.appendChild(createTextNode(discountInPercentage));
     cardBody.append(cardDiscount);

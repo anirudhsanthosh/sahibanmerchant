@@ -1,4 +1,9 @@
-import { createElement, createTextNode } from "../../utils/dom";
+import {
+  createElement,
+  createTextNode,
+  createOnsElement,
+} from "../../utils/dom";
+
 //generic card creator , card outer eleent is section
 /**
  *
@@ -74,12 +79,9 @@ function validateScrllShadows({ cardBody, leftShadow, rightShadow }) {
   // create a mutation observer and watch the element is atached to dom or not
   let observer;
   const mutationCallback = (mutations) => {
-    console.log("mutations");
     mutations.forEach(function (mutation) {
       for (var i = 0; i < mutation.addedNodes.length; i++) {
-        console.log(mutation.addedNodes[i]);
         if (document.body.contains(cardBody)) {
-          console.log("contain");
           observer.disconnect();
           const cardBodyWidth = cardBody.getBoundingClientRect().width;
           const cardScrollWidth = cardBody.scrollWidth;
@@ -96,4 +98,91 @@ function validateScrllShadows({ cardBody, leftShadow, rightShadow }) {
     childList: true,
     subtree: true,
   });
+}
+
+export function noticeCard(config = { classNames: ["danger"] }) {
+  const { message, classNames } = config;
+  if (!message) return null;
+  const noticeWrapper = createElement("div", ["notice", ...classNames]);
+  noticeWrapper.append(createTextNode(message));
+  return noticeWrapper;
+}
+
+export function cartItemCard(config = {}) {
+  const card = createElement("div", ["cart-item-card"]);
+  //title
+  const name = createElement("div", ["cart-item-card-item-name"]);
+  name.append(createTextNode(config.name));
+
+  //body
+  const bodyWrapper = createElement("div", [
+    "cart-item-card-item-body-wrapper",
+  ]);
+  //right
+  const bodyRight = createElement("div", ["cart-item-card-item-body-right"]);
+  const image = createElement("img", ["cart-item-card-image"]);
+  image.src = config.image;
+
+  const quantityContainer = createElement("div", ["quantity-wrapper"]);
+  const quantityLabel = createElement("label", ["quantity-label"]);
+  quantityLabel.append(createTextNode("Quantity"));
+  const quantity = createElement("input", ["cart-item-card-quantity"], {
+    type: "number",
+    value: config.quantity,
+  });
+
+  quantity.onchange = (e) => {
+    if (
+      isNaN(e.target.value) ||
+      !e.target.value ||
+      e.target.value < 1 ||
+      e.target.value > config.quantitylimit
+    )
+      return e.target.classList.add("error");
+    e.target.classList.remove("error");
+    config.updateQuantity(e.target.value);
+  };
+
+  quantityContainer.append(quantityLabel, quantity);
+
+  bodyRight.append(image, quantityContainer);
+  //left
+  const bodyLeft = createElement("div", ["cart-item-card-item-body-left"]);
+  const priceWrapper = createElement("div", [
+    "cart-item-card-item-price-wrapper",
+  ]);
+  const regularPrice = createElement("div", [
+    "cart-item-card-item-regular-price",
+  ]);
+  const salePrice = createElement("div", ["cart-item-card-item-sale-price"]);
+  const offer = createElement("div", ["cart-item-card-item-offer"]);
+
+  salePrice.append(createTextNode(config.salePrice));
+  if (config.discount) offer.append(createTextNode(config.discount));
+  if (config.regularPrice)
+    regularPrice.append(createTextNode(config.regularPrice));
+  priceWrapper.append(regularPrice, salePrice, offer);
+  bodyLeft.append(priceWrapper);
+
+  bodyWrapper.append(bodyLeft, bodyRight);
+
+  const buttonWrapper = createElement("div", ["cart-item-card-button-wrapper"]);
+  const removeButton = createElement(
+    "ons-button",
+    ["cart-item-card-remove-button"],
+    { modifier: "large", icon: "md-delete" } //"large--quiet"
+  );
+  removeButton.append(createTextNode("Remove"));
+  removeButton.onclick = () => {
+    config.removeButtonOnclick();
+  };
+  // const addButton = createElement("button", ["cart-item-card-add-button"]);
+  // addButton.append(createTextNode("Add"));
+  buttonWrapper.append(removeButton);
+
+  //card notice
+
+  card.append(name, bodyWrapper, buttonWrapper);
+
+  return card;
 }

@@ -1,6 +1,10 @@
 // api endpoints
 
-export const SITE = "http://localhost/wordpress/";
+export let SITE = "http://192.168.14.121/wordpress/";
+
+export const changeSite = (site) => {
+  SITE = `http://${site}/wordpress/`;
+};
 export const OFFER_NODE = "mam/v1/offers";
 export const CATEGORIES_NODE = "wc/store/products/categories";
 export const API_URL = "wp-json/";
@@ -9,8 +13,17 @@ export const CART_NODE = "cocart/v2/cart/";
 export const PRODUCTS_NODE = "wc/store/products";
 export const PRODUCT_NODE = "cocart/v2/products/";
 
+export const REMOVE_ITEM_FROM_CART = "wc/store/cart/remove-item";
+export const UPDATE_CART_ITEM_FROM = "wc/store/cart/update-item";
+
+export const ADD_ITEM = "wc/store/cart/add-item";
+export const APPLY_COUPON = "wc/store/cart/apply-coupon";
+export const REMOVE_COUPON = "wc/store/cart/remove-coupon";
+export const CHECKOUT = "wc/store/checkout";
+
 //global
 export const ONS_NAVIGATOR_ID = "navigator";
+export const SUPPORTED_PRODUCT_TYPES = ["simple", "variable"];
 
 // homepage
 
@@ -31,6 +44,9 @@ export const SEARCH_PAGE_CLEAR_BUTTON_ID = "searchpageClearButton";
 // bottom navigation
 
 export const cartCountBadgeId = "cart-count";
+
+//cart page
+export const CART_PAGE_DISPLAY_ROOT_ID = "cart-display";
 
 // pages
 export const PAGES = {

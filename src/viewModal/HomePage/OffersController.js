@@ -138,6 +138,7 @@ function formatProductForProductCard(products) {
       100 - Math.floor((selePrice / regularPrice) * 100);
 
     const formattedProduct = {
+      type: product.type,
       title: product.name,
       onSale: product.on_sale,
       regularPrice,

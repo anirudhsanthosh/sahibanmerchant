@@ -17,6 +17,7 @@
 @import "includes/splide.min.css";
 @import "includes/splideOverrides.css";
 @import "includes/productPage.css";
+@import "includes/cart.css";
 
 * {
   box-sizing: border-box;

@@ -203,10 +203,25 @@ export default class ProductsController {
 
       // config for product
 
-      const regularPrice = product.prices.regular_price / 100;
-      const selePrice = product.prices.regular_price / 100;
-      const discountInPercentage =
-        100 - Math.floor((selePrice / regularPrice) * 100);
+      let regularPrice =
+        product.type === "simple"
+          ? product.prices.regular_price
+          : product.on_sale
+          ? product.prices.price_range.max_amount
+          : product.prices.regular_price;
+      regularPrice /= 100;
+
+      let selePrice =
+        product.type === "simple"
+          ? product.prices.sale_price
+          : product.on_sale
+          ? product.prices.price_range.min_amount
+          : product.prices.sale_price;
+
+      selePrice /= 100;
+      const discountInPercentage = Math.floor(
+        100 - (selePrice / regularPrice) * 100
+      );
       const formattedProduct = {
         title: product.name,
         onSale: product.on_sale,

@@ -10,3 +10,7 @@ export function isEmptyObject(obj) {
   if (!obj.constructor === Object) return true;
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
+
+export function isAndroid() {
+  return cordova.platformId === "android";
+}
