@@ -6,7 +6,7 @@ export default class ChekoutController {
 
   init() {
     return new Promise((resolve, reject) => {
-      const url = "http://localhost/wordpress/checkout/"; //SITE + API_URL + CHECKOUT;
+      const url = SITE + API_URL + "checkout/";
       const authHeader = userModal.getAuthHeader();
       const browser = new Browser({ url, headers: authHeader });
     });
