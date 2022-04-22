@@ -8,6 +8,7 @@ import ProductsController from "../Products/ProductsController";
 
 export default function searchController() {
   let searchHistory = searchModal.get();
+  //launching search page list
   SeachPageMainView(search, searchHistory.reverse(), removeFromHistory);
 }
 
@@ -50,6 +51,7 @@ function reArrangeSearchHistory(newQuery, history = []) {
 function removeFromQuery(query, history) {
   return history.filter((term) => term !== query);
 }
+
 function removeFromHistory(query) {
   let newHistory = removeFromQuery(query, searchModal.get());
   // saving new history

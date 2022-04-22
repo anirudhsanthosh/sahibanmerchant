@@ -51,7 +51,7 @@ export default function productCard(config = {}) {
             "product-card-price-regular",
           ]);
 
-    cardPrice.appendChild(cardPriceRegular);
+    if (regularPrice) cardPrice.appendChild(cardPriceRegular);
   }
   if (onSale && type === "variable") {
     cardPrice.appendChild(createTextNode(" - "));

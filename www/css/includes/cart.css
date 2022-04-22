@@ -174,7 +174,7 @@ section.applied-coupons-container {
   background: #fff;
   padding: 0.5rem 1.5rem;
   box-shadow: 1px 1px 8px 0px rgb(0 0 0 / 50%);
-  margin-top: 1rem;
+  margin-top: auto;
 }
 
 .cart-cta-container {
@@ -209,4 +209,12 @@ section.applied-coupons-container {
   border-top: 1px solid var(--theme-color);
   border-top-style: dotted;
   padding-top: 0.25rem;
+}
+.cart-totals-line > strong > span {
+  font-family: Roboto;
+}
+div#cart-display {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }

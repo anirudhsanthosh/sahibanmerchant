@@ -203,28 +203,54 @@ export default class CartController {
   }
 
   async checkout(cart) {
-    const checkout = new CheckoutController();
-    const result = await checkout.init();
-    console.log(result);
-    return;
-    const headers = this.getHeadersForCartRequest();
+    // empty cart return
+    if (cart?.items?.length < 1)
+      return toast("Please fill the cart first.", 4000);
+    // show loader
     window.ajaxloader.show();
 
+    // chechout controller intantiation
+    const checkout = new CheckoutController();
+
+    //first request for checkout rest api and if it faild cancel the iab window
+
+    let abortCheckout = false; // thi is used to avaoid execution of iab clossing error function
+    const headers = this.getHeadersForCartRequest();
+    // data is not nessessory for get request
     const data = {
       billing_address: cart.billing_address,
       shipping_address: cart.shipping_address,
       payment_method: "razorpay",
     };
+    // calling cart modal and check can checkout or not
     CartModal.checkout(data, headers)
       .then((res) => {
         console.log({ res });
         if (res.error) throw new Error(res.error);
-
-        window.ajaxloader.hide();
       })
       .catch((error) => {
+        // when there is an error we need to destroy iab instatnce
+        abortCheckout = true;
+        checkout.destroy();
         toast(error.message, 4000);
         window.ajaxloader.hide();
       });
+
+    // initializing checkout iab will be launched soon
+    checkout
+      .init()
+      .then((resultFromIab) => {
+        console.log(resultFromIab);
+        if (abortCheckout) return; // if the request is aborted then exit the callback
+        console.log("do nessessry steps to handle checkout iab exit");
+        window.ajaxloader.hide();
+      })
+      .catch((errorFromIab) => {
+        console.log(errorFromIab);
+        if (abortCheckout) return; // if the request is aborted then exit the callback
+        window.ajaxloader.hide();
+      });
+
+    return;
   }
 }

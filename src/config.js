@@ -1,6 +1,6 @@
 // api endpoints
 
-export let SITE = "http://192.168.14.121/wordpress/";
+export let SITE = "http://192.168.80.121/wordpress/";
 
 export const changeSite = (site) => {
   SITE = `http://${site}/wordpress/`;

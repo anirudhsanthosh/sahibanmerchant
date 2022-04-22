@@ -190,11 +190,11 @@ export default class cart {
   static async checkout(requestdata, headers) {
     const url = SITE + API_URL + CHECKOUT;
     try {
-      const data = await axios.post(
+      const data = await axios.get(
         url,
-        {
-          ...requestdata,
-        },
+        // {
+        //   ...requestdata,
+        // },
         {
           headers: {
             ...headers,

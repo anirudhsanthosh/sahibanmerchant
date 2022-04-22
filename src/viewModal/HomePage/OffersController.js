@@ -127,13 +127,14 @@ function formatProductForProductCard(products) {
         ? product.variable_price.max_price
         : product.on_sale
         ? product.regular_price
-        : "";
+        : null;
     const selePrice =
       product.type === "variable"
         ? product.variable_price.min_price
         : product.sale_price === ""
         ? product.price
         : product.sale_price;
+
     const discountInPercentage =
       100 - Math.floor((selePrice / regularPrice) * 100);
 

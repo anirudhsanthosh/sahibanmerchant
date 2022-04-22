@@ -18,8 +18,8 @@ import LoginModal from "../../modal/login/loginModal";
 import dataController from "../DataController/mainDataController";
 
 export default function homepageController() {
-  // //bottom nav button
-  bottomNavigator();
+  //bottom nav button
+  window.bottomNavigator = bottomNavigator();
 
   // build view from cache
   buildView();
@@ -53,15 +53,17 @@ async function verifyUserCredentialsAndBuildView() {
   const credentials = userModal.getAuth();
 
   const data = await LoginModal(credentials.username, credentials.password);
-  console.log(data);
-  if (data?.error?.response?.status == 500) {
-    //TODO serer down
+  console.log({ dataFromVerify: data });
+  if (data?.error?.response?.status <= 500) {
     alert("Unable to contact server!");
     return;
   }
-  if (data.error) {
+  if (data?.error?.response?.status <= 400) {
     LogoutController();
     return;
+  }
+  if (data?.error) {
+    alert("Network Error!");
   }
 
   const saveData = dataController(data);

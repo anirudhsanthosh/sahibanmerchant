@@ -69,4 +69,7 @@ export default class bottomNavigator {
   hide() {
     this.#element.parentElement.style.display = "none";
   }
+  destroy() {
+    this.#element.innerHTML = "";
+  }
 }
