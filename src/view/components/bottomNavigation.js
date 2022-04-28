@@ -36,8 +36,9 @@ export default class bottomNavigator {
     };
 
     document.addEventListener("postpush", (event) => {
+      button.classList.remove("active");
+
       if (event.enterPage.id !== data.id) return;
-      console.log(data.indication);
       if (data.indication) {
         Array.from(this.#element.children).map((button) =>
           button.classList.remove("active")
@@ -48,7 +49,7 @@ export default class bottomNavigator {
     });
 
     document.addEventListener("postpop", (event) => {
-      console.log(event);
+      button.classList.remove("active");
       if (event.navigator.topPage.id == data.id) {
         if (data.indication) {
           Array.from(this.#element.children).map((button) =>

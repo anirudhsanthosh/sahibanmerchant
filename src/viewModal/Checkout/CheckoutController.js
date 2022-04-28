@@ -12,14 +12,19 @@ export default class ChekoutController {
       const auth = userModal.getAuth();
       this.#browser = new Browser({ url, auth });
       // initiate browser and pass error or resolve to caller
-      this.#browser
-        .init()
-        .then((res) => {
-          resolve(res);
-        })
-        .catch((error) => {
-          reject(error);
-        });
+      try {
+        this.#browser
+          .init()
+          .then((res) => {
+            resolve(res);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      } catch (e) {
+        console.log("get");
+        reject(e);
+      }
     });
   }
 

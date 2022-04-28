@@ -17,12 +17,15 @@ export default class Browser {
   #paymentSuccess = false;
   #errorOccuredWhileLoading = false;
   #loadErrorMessage = "";
+  #failedPayment = false;
 
   constructor({ url, headers }) {
     this.#url = url;
     this.#headers = headers;
   }
   init() {
+    return new Promise((resolve, reject) => {
+   
     this.#browser = cordova.InAppBrowser.open(
       this.#url,
       this.#target,
@@ -43,54 +46,52 @@ export default class Browser {
 
     window.activeBrowser = this;
 
-    return new Promise((resolve, reject) => {
+    
       this.#resolve = resolve;
       this.#reject = reject;
     });
   }
 
   #loadstart = (event) => {
-    console.log("loadStartCallBack:::::::::::::", event);
-    ajaxloader.show();
+    // console.log("loadStartCallBack:::::::::::::", event);
     this.#browser.hide();
   };
 
   #loadstop = (event) => {
-    console.log("loadStopCallBack:::::::::", event);
+    // console.log("loadStopCallBack:::::::::", event);
     if (this.#browser == undefined) return;
     // this.#browser.insertCSS({ code: this.#css });
     this.#browser.executeScript(
       { code: this.#script() },
       this.#executeScriptCallBack
     );
-    // this.#browser.show();
   };
 
   #loaderror = (event) => {
-    console.log("loadErrorCallBack:::::::::::::", event);
+    // console.log("loadErrorCallBack:::::::::::::", event);
     this.#errorOccuredWhileLoading = true;
     this.#loadErrorMessage = event.message;
     this.#browser.close();
   };
 
   #beforeload = (event, callback) => {
-    console.log(
-      ":::::::::::::::::::::::::::before loadCallBack:::::::::",
-      event
-    );
+    // console.log(
+    //   ":::::::::::::::::::::::::::before loadCallBack:::::::::",
+    //   event
+    // );
 
     callback(event.url); // we can direct user to any url with this
   };
 
   #executeScriptCallBack = (event) => {
-    console.log("executeScriptCallBack:::::::::::::", event);
+    // console.log("executeScriptCallBack:::::::::::::", event);
     // ajaxloader.hide();
   };
 
   #message = (event) => {
     console.log("messageCallBack:::::::::", event);
-
-    // actions
+    console.log(event?.data);
+    // actions - used to manage visual state of iab
     switch (event?.data?.action) {
       case "exit":
         return this.close();
@@ -106,7 +107,7 @@ export default class Browser {
         break;
     }
 
-    // sates
+    // sates-used to manage the payment state of checkout
     switch (event?.data?.state) {
       case "loggedIn":
         this.#userLoggedIn = true;
@@ -117,20 +118,71 @@ export default class Browser {
       case "paymentSuccess":
         this.#paymentSuccess = true;
         break;
+      case "failedPayment":
+        this.#failedPayment = true;
+        break;
 
       default:
         break;
     }
   };
 
+  /**
+   * thsis will be get called when iab is clossed
+   * @param {*} event
+   * @returns status of payment
+   */
   #exit = (event) => {
-    console.log("exitCallback::::::::::::", event);
-    this.#resolve({ success: "set" });
+    // console.log("exitCallback::::::::::::", event);
+
+    const template = {
+      error: true,
+      success: false,
+      message: "Checkout aborted.",
+      code: "checkout_aborted",
+    };
+
+    if (this.#paymentSuccess) {
+      template.success = true;
+      template.error = false;
+      template.message = "Payment Successful.";
+      template.code = "payment_success";
+      return this.#resolve(template);
+    }
+    // payment failed
+    if (this.#failedPayment) {
+      template.message = "payment failed";
+      template.code = "payment_faild";
+      return this.#reject(template);
+    }
+
+    // load error may be network error or server error
+    if (this.#errorOccuredWhileLoading) {
+      template.message = this.#loadErrorMessage;
+      template.code = "load_error";
+      return this.#reject(template);
+    }
+
+    // user is unable to authenticate at checkout
+    if (!this.#userLoggedIn) {
+      template.message = "Checkout has aborted, failed to authenticate.";
+      template.code = "failed_to_authenticate";
+      return this.#reject(template);
+    }
+    // either user has canceled or some other reasons the user was unable to pay after reaching the payment page
+    if (this.#userTryToPay && !this.#failedPayment) {
+      template.message = "Checkout has aborted from pament page.";
+      template.code = "checkout_aborted_from_payment_page";
+      return this.#reject(template);
+    }
+
+    // user has canceled the payment
+    return this.#reject(template);
   };
 
   close() {
-    this.#browser.close();
     this.#browser.hide(); // for some reason closing the inapp browser causing an issue; the tabs will nit open until the variable is assigned with null or other value
+    setTimeout(() => this.#browser.close(), 200);
   }
 
   show() {
@@ -149,15 +201,13 @@ export default class Browser {
     return `
   // setting url and auth
 
-    const url = ${JSON.stringify(SITE + "my-account/")};// my-account/
+    const url = ${JSON.stringify(SITE + "my-account/")};
     const auth = ${JSON.stringify(userModal.getAuth())};
     const userId = '${JSON.stringify(userModal.get().userId)}';
-
+    const triedToPay = ${JSON.stringify(this.#userTryToPay)};
+    
+    //fill data in the login form
     function fillData(data){
-      if(!isHomeSite()) return show(); // if this is not homesite then show iab
-      if(isLogged()) return goToCheckout();
-      // if not logged in then fill the data
-      if(window.location.pathname.indexOf('/my-account') < 0) return exit();
       const {username,password} = data;
       document.querySelector('#username').value = username;
       document.querySelector('#password').value = password;
@@ -165,9 +215,25 @@ export default class Browser {
       document.querySelector('button[name=login][type=submit]').click();
   
     }
+    // validate current page and set state 
+    function validateSite(){
+      if(!isHomeSite()) return show(); // if this is not homesite then show iab
 
-    fillData(auth);
+      if(isLogged()) {
+        loggedIn(); // send user is logged in message back to app
+        if(isOrderRecieved()) orderRecieved();// send order recieved to app
+        if(isOrderPaymentStage()) orderPaymentStage();// send user has reached payment page to app
+        if(isPaymentFailed()) return paymentFailed(); // check the payment has faild or not befor returning true for checkout
+        return goToCheckout(); // hence the user is logged in mve location to checkout
+      }
 
+      // if not logged in then fill the data
+      // once again confirm user is on my-account page
+      if(window.location.pathname.indexOf('/my-account') < 0) return exit();
+      // filll data in the login form
+      fillData(auth);
+    }
+    validateSite();
 
     // find we are logged in or not if logged in then move to checkout
 
@@ -177,9 +243,11 @@ export default class Browser {
     
     // got to checkout
     function goToCheckout(){
-      if(!isHomeSite()) return show();
-      if(isCheckout()) return show();
-      if(isCart()) exit();
+
+      if(!isHomeSite()) return show(); // if this is not homesite then show iab
+     
+      if(isCheckout()) return show();// if user is already on checkout page then show iab
+      if(isCart()) exit();// if user is on cart page then exit iab wich means the user cart is empty of user failed to login
       window.location.replace(${JSON.stringify(SITE + "checkout/")});
     }
     
@@ -199,20 +267,28 @@ export default class Browser {
       return (window.location.toString().indexOf(host) > -1) 
     }
 
+    function  isOrderRecieved(){
+      return window.location.pathname.indexOf('checkout/order-received') > -1;
+    }
+    function  isOrderPaymentStage(){
+      return window.location.pathname.indexOf('checkout/order-pay/') > -1;
+    }
+
+    function isPaymentFailed(){
+      return (window.location.pathname.match(/\\/checkout\\/$/gm) && triedToPay)
+    }
+
     function message(msg){
       let stringifiedMessageObj = JSON.stringify(msg);
       webkit.messageHandlers.cordova_iab.postMessage(stringifiedMessageObj);
     }
 
-    function  isOrderRecieved(){
-      return window.location.pathname.indexOf('checkout/order-received') > -1;
-    }
 
     function exit(){
       console.log('exit')
       const msg ={
         action : "exit",
-    }
+      }
       message(msg);
     }
 
@@ -222,11 +298,40 @@ export default class Browser {
       }
       message(msg);
     }
+    
     function hide(){
       const msg ={
         action : "hide",
       }
       message(msg);
+    }
+
+    function orderRecieved(){
+      const msg ={
+        state : "paymentSuccess",
+      }
+      message(msg);
+      setTimeout(()=>{exit()},2000); // exit iab after 2s;
+    }
+    function orderPaymentStage(){
+      const msg ={
+        state : "tryToPay",
+      }
+      message(msg);
+    }
+    function loggedIn(){
+      const msg ={
+        state : "loggedIn",
+      }
+      message(msg);
+    }
+
+    function  paymentFailed(){
+      const msg ={
+        state : "failedPayment",
+      }
+      message(msg);
+      setTimeout(()=>{exit()},2000); // exit iab after 2s;
     }
 
 

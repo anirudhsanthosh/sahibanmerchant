@@ -99,7 +99,7 @@ function validateScrllShadows({ cardBody, leftShadow, rightShadow }) {
     subtree: true,
   });
 }
-
+// notice card
 export function noticeCard(config = { classNames: ["danger"] }) {
   const { message, classNames } = config;
   if (!message) return null;
@@ -108,6 +108,7 @@ export function noticeCard(config = { classNames: ["danger"] }) {
   return noticeWrapper;
 }
 
+//cart item card
 export function cartItemCard(config = {}) {
   const card = createElement("div", ["cart-item-card"]);
   //title
@@ -118,11 +119,30 @@ export function cartItemCard(config = {}) {
   const bodyWrapper = createElement("div", [
     "cart-item-card-item-body-wrapper",
   ]);
+
+  //card notice
+  const cardNotice = createElement("div", ["cart-item-notice"]);
+
+  const message = (message) => {
+    cardNotice.innerHTML = "";
+    cardNotice.appendChild(createTextNode(message));
+  };
+  // card loader
+  const cardLoader = createElement("div", ["cart-item-loader"]);
+  const spinner = createOnsElement(
+    '<ons-icon icon="md-spinner" spin></ons-icon>'
+  );
+  cardLoader.append(spinner);
+
+  cardLoader.show = () => cardLoader.classList.add("show");
+  cardLoader.hide = () => cardLoader.classList.remove("show");
   //right
   const bodyRight = createElement("div", ["cart-item-card-item-body-right"]);
+  // image in the card
   const image = createElement("img", ["cart-item-card-image"]);
   image.src = config.image;
 
+  //quantity input box
   const quantityContainer = createElement("div", ["quantity-wrapper"]);
   const quantityLabel = createElement("label", ["quantity-label"]);
   quantityLabel.append(createTextNode("Quantity"));
@@ -131,21 +151,27 @@ export function cartItemCard(config = {}) {
     value: config.quantity,
   });
 
-  quantity.onchange = (e) => {
-    if (
-      isNaN(e.target.value) ||
-      !e.target.value ||
-      e.target.value < 1 ||
-      e.target.value > config.quantitylimit
-    )
-      return e.target.classList.add("error");
-    e.target.classList.remove("error");
-    config.updateQuantity(e.target.value);
+  quantity.onchange = () => {
+    cardLoader.show();
+    config
+      .updateQuantity(quantity.value)
+      .then((res) => {
+        quantity.classList.remove("error");
+        cardLoader.hide();
+      })
+      .catch((error) => {
+        console.log({ errFromview: error });
+        quantity.classList.add("error");
+        quantity.value = config.quantity;
+        message(error.message);
+        cardLoader.hide();
+      });
   };
 
   quantityContainer.append(quantityLabel, quantity);
 
   bodyRight.append(image, quantityContainer);
+
   //left
   const bodyLeft = createElement("div", ["cart-item-card-item-body-left"]);
   const priceWrapper = createElement("div", [
@@ -180,9 +206,7 @@ export function cartItemCard(config = {}) {
   // addButton.append(createTextNode("Add"));
   buttonWrapper.append(removeButton);
 
-  //card notice
-
-  card.append(name, bodyWrapper, buttonWrapper);
+  card.append(name, bodyWrapper, cardNotice, buttonWrapper, cardLoader);
 
   return card;
 }

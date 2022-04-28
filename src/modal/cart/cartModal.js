@@ -24,9 +24,9 @@ export default class cart {
         },
       });
 
-      storage.set(this.#countKey, data.data.item_count);
+      storage.set(this.#countKey, data.data.items_count);
       storage.set(this.#cartKey, data.data);
-      return data;
+      return data.data;
     } catch (e) {
       return { error: e };
     }

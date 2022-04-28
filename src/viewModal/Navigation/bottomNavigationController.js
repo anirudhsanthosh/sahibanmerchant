@@ -59,7 +59,7 @@ const buttons = [
     onclick: () => {
       NavigationController.validateActiveNavigator();
       window.activeNavigator.push(PAGES.cart).then((event) => {
-        console.log("page has pushed to top", event);
+        console.log("page has pushed to top", "eevent", event);
       });
     },
   },

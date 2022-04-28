@@ -3,20 +3,33 @@ import { cartItemCard, noticeCard } from "../components/card";
 import { createElement, createTextNode } from "../../utils/dom";
 import { toast } from "../../utils/notification";
 import { formatNumber } from "../../utils/sanitize";
+import progressbar from "../components/progressbar";
 export default class CartView {
   #config;
   #displayRoot;
+  #progressBar;
   constructor(config) {
     this.#config = config;
 
     this.#displayRoot = document.getElementById(CART_PAGE_DISPLAY_ROOT_ID);
     this.init();
   }
-
+  /**
+   * this function will return if the view is on stack or not
+   */
+  isOnStack() {
+    return document.getElementById(CART_PAGE_DISPLAY_ROOT_ID);
+  }
   // initiate view
   init() {
+    if (!this.isOnStack()) return false;
+
     this.#displayRoot.innerHTML = "";
-    if (this.#config.items.length < 1) {
+    this.attachProgressBar(); // attach a new progress bar
+
+    if (!this.#config || Object.keys(this.#config).length === 0) return; //if empty config return
+
+    if (this.#config?.items?.length < 1) {
       return this.cartEmptyStatusIndicator(true);
     }
     this.cartEmptyStatusIndicator();
@@ -31,6 +44,20 @@ export default class CartView {
     this.displayApplyCouponForm(this.#config.applyCoupon);
 
     this.displayTotalPriceAndCheckoutButton();
+  }
+
+  attachProgressBar() {
+    this.#progressBar = progressbar();
+    this.#displayRoot.prepend(this.#progressBar);
+  }
+
+  showProgressBar() {
+    if (!this.isOnStack()) return;
+    this.#progressBar.show();
+  }
+  hideProgressBar() {
+    if (!this.isOnStack()) return;
+    this.#progressBar.hide();
   }
 
   displayErrors(errors = []) {
@@ -173,7 +200,7 @@ export default class CartView {
       formatNumber(this.#config.totalItems)
     );
     itemTotal.append(
-      `Price (${this.#config.items.length + 1} item(s))`,
+      `Price (${this.#config.itemsCount} item(s))`,
       itemTotalValue
     );
 

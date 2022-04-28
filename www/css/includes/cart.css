@@ -3,8 +3,14 @@
   background: url(/img/empty_cart.svg) center center;
   background-size: 80%;
   background-repeat: no-repeat;
+  align-items: center;
+  justify-content: 50%;
 }
-
+#cart-display.empty::after {
+  content: "Your cart is empty";
+  margin-top: 30%;
+  font-size: 120%;
+}
 .cart-items {
   display: flex;
   flex-direction: column;
@@ -16,6 +22,7 @@
   border: 1px solid #e8e8e8;
   border-radius: 6px;
   box-shadow: var(--product-card-shadow);
+  position: relative;
 }
 
 .cart-item-card-item-name {
@@ -214,7 +221,29 @@ section.applied-coupons-container {
   font-family: Roboto;
 }
 div#cart-display {
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.cart-item-loader {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(1px);
+  color: var(--theme-color);
+  font-size: 160%;
+}
+.cart-item-loader.show {
+  display: flex;
+}
+.cart-item-notice:not(:empty) {
+  padding: 0.5rem;
+  text-align: center;
+  color: #f44336;
 }

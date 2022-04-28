@@ -1,4 +1,4 @@
-import orders from "../../modal/orders/OrdersModal";
+import orders from "../../modal/Orders/OrdersModal";
 import offers from "../../modal/offers/OffersModal";
 import coupons from "../../modal/coupons/couponsModal";
 import userModal from "../../modal/user/userModal";

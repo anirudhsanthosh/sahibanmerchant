@@ -18,6 +18,7 @@
 @import "includes/splideOverrides.css";
 @import "includes/productPage.css";
 @import "includes/cart.css";
+@import "includes/progressBar.css";
 
 * {
   box-sizing: border-box;
