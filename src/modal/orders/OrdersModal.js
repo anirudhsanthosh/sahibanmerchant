@@ -1,5 +1,6 @@
 import storage from "../../utils/localStorage";
-import { SITE, API_URL, ORDERS } from "../../config";
+import { SITE, API_URL, ORDERS, ORDER } from "../../config";
+import { toQueryString } from "../../utils/serialize";
 
 export default class OrdersModal {
   /**
@@ -14,18 +15,36 @@ export default class OrdersModal {
     return storage.set(this.#baseKey, orders);
   }
 
-  static getOrder({ id, auth }) {
-    const url = SITE + API_URL + ORDERS;
+  static getOrders({ auth, query = {} }) {
+    const url = SITE + API_URL + ORDERS + "?" + toQueryString(query);
+
     return axios
       .get(url, {
-        params: { id },
         headers: {
           ...auth,
         },
       })
-      .then((res) => res.data)
+      .then((res) => {
+        return res.data;
+      })
       .catch((error) => {
-        error;
+        return { error };
+      });
+  }
+
+  static getOrder({ id, auth }) {
+    const url = SITE + API_URL + ORDER + id;
+    return axios
+      .get(url, {
+        headers: {
+          ...auth,
+        },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        return { error };
       });
   }
 }

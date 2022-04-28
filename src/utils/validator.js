@@ -1,4 +1,4 @@
-import { trim, isEmpty } from "validator";
+import { isEmpty } from "validator";
 
 export function isPassBasicValidation(str) {
   let input = str.trim();

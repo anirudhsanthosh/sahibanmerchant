@@ -24,10 +24,10 @@ export default class ProductController {
 
     this.#config = config;
     this.#product = config.product;
-    // reject unsupported product types
     if (
-      !SUPPORTED_PRODUCT_TYPES.includes(config.product.type) ||
-      SUPPORTED_PRODUCT_TYPES.includes(config.product.type) < 0
+      config?.product?.type &&
+      (!SUPPORTED_PRODUCT_TYPES.includes(config.product.type) ||
+        SUPPORTED_PRODUCT_TYPES.includes(config.product.type) < 0)
     ) {
       throw new Error("unsupported product type");
     }
@@ -38,6 +38,13 @@ export default class ProductController {
     this.getProduct()
       .then((product) => {
         console.trace(product);
+        // reject unsupported product types
+        if (
+          !SUPPORTED_PRODUCT_TYPES.includes(product.type) ||
+          SUPPORTED_PRODUCT_TYPES.includes(product.type) < 0
+        ) {
+          throw new Error("unsupported product type");
+        }
         this.#product = product;
         this.displayProduct(product);
       })

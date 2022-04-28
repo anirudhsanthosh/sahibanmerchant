@@ -20,7 +20,6 @@ export default function productCard(config = {}) {
     discountInPercentage,
     onclick,
   } = config;
-
   //card
   const card = createElement("div", ["product-card"]);
 
@@ -28,8 +27,14 @@ export default function productCard(config = {}) {
   const productImage = createElement("img", ["product-image"], {
     loading: "lazy",
   });
-  productImage.src = image;
-
+  // productImage.src = image;
+  const src = image;
+  if (src) {
+    window.fileCacheAdaptor
+      .get(src)
+      .then((url) => (productImage.src = url))
+      .catch(() => (productImage.src = src));
+  }
   //card title
   const cardTitle = createElement("h5", ["product-card-title"]);
   cardTitle.appendChild(createTextNode(title));
@@ -53,7 +58,7 @@ export default function productCard(config = {}) {
 
     if (regularPrice) cardPrice.appendChild(cardPriceRegular);
   }
-  if (onSale && type === "variable") {
+  if (onSale && type === "variable" && regularPrice !== selePrice) {
     cardPrice.appendChild(createTextNode(" - "));
   }
 

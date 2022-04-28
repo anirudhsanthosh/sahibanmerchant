@@ -107,11 +107,17 @@ export default class ProductView {
     );
     const sliderTrack = createElement("div", ["splide__track"]);
     const sliderList = createElement("ul", ["splide__list"]);
-    images.forEach((image) => {
+    images.forEach((imageSrc) => {
       const imageElement = createElement("li", ["splide__slide"]);
-      imageElement.appendChild(
-        createElement("img", [], { src: image, loading: "lazy" })
-      );
+
+      const image = createElement("img", [], { loading: "lazy" });
+      if (imageSrc) {
+        window.fileCacheAdaptor
+          .get(imageSrc)
+          .then((url) => (image.src = url))
+          .catch(() => (image.src = imageSrc));
+      }
+      imageElement.appendChild(image);
       sliderList.appendChild(imageElement);
     });
     sliderTrack.appendChild(sliderList);
@@ -120,11 +126,13 @@ export default class ProductView {
   }
 
   displayProduct(config) {
-    if (config.type === "simple") {
-      return this.displaySimpleProduct(config);
-    }
+    return Promise.resolve(this.#page).then((page) => {
+      if (config.type === "simple") {
+        return this.displaySimpleProduct(config);
+      }
 
-    return this.displayVariableProduct(config);
+      return this.displayVariableProduct(config);
+    });
   }
 
   displaySimpleProduct(config) {
@@ -323,9 +331,15 @@ export default class ProductView {
     const variationCards = variations.map((variaion) => {
       const variationCard = createElement("div", ["variation-card"]);
       const variationImage = createElement("img", ["variation-card-image"], {
-        src: variaion.image,
         loading: "lazy",
       });
+      if (variaion.image) {
+        window.fileCacheAdaptor
+          .get(variaion.image)
+          .then((url) => (variationImage.src = url))
+          .catch(() => (variationImage.src = variaion.image));
+      }
+
       const variationPriceContainer = createElement("div", [
         "variation-card-price-container",
       ]);

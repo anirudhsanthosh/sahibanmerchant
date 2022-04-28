@@ -98,3 +98,8 @@
   color: lightgrey;
   font-weight: 100;
 }
+
+ons-button.filter-button.button--material.button--material--flat.button--large.button {
+  visibility: hidden;
+  pointer-events: none;
+}

@@ -1,4 +1,5 @@
-import CategoriesModal from "../../modal/categories/CategoriesModal";
+import categoriesModal from "../../modal/categories/categoriesModal";
+
 import { HOMEPAGE_TOP_CATEGORY_SECTION_ID_ } from "../../config";
 import { isEmpty } from "validator";
 import { removeElement } from "../../utils/dom";
@@ -8,7 +9,7 @@ import ProductsController from "../Products/ProductsController";
 import topCategoriesView from "../../view/Homepage/topCategoriesView";
 
 export default async function topCategoriesSliderController() {
-  const categories = CategoriesModal.get();
+  const categories = categoriesModal.get();
 
   const topCategories = categories.filter(
     (category) =>

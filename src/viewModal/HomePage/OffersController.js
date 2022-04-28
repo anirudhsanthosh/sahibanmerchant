@@ -4,7 +4,7 @@ import ProductsController from "../Products/ProductsController";
 import ProductController from "../Product/ProductController";
 
 //modal
-import CategoriesModal from "../../modal/categories/categoriesModal";
+import categoriesModal from "../../modal/categories/categoriesModal";
 
 //view
 
@@ -85,7 +85,7 @@ function formatCategoriesForProductCard(categories) {
     return [];
 
   return categories.map((category) => {
-    const categoryData = CategoriesModal.get(category);
+    const categoryData = categoriesModal.get(category);
     if (!categoryData) return;
 
     const gotoCategoryPage = () => {

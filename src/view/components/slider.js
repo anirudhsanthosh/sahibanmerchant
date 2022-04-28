@@ -42,8 +42,15 @@ class flexSlider {
   #createSlides(config) {
     let slide = document.createElement("div");
     slide.classList.add("flex-slide");
-    let image = document.createElement("img");
-    image.src = config.image;
+    let image = document.createElement("img", [], { loading: "lazy" });
+    // if the image catching is not enabled fall back
+    if (config.image) {
+      window.fileCacheAdaptor
+        .get(config.image)
+        .then((url) => (image.src = url))
+        .catch(() => (image.src = config.image));
+    }
+
     image.setAttribute("loading", "lazy");
     slide.appendChild(image);
     slide.onclick = () => config.onClick();

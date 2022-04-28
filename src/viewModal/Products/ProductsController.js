@@ -202,21 +202,36 @@ export default class ProductsController {
       };
 
       // config for product
+      console.log(product.name, product.prices);
 
-      let regularPrice =
+      let regularPrice, selePrice;
+      // if(product.type === "simple"){
+      //   regularPrice = product?.prices?.regular_price;
+      //   selePrice =product.prices?.sale_price;
+      // }
+      // else if(!product.prices?.price_range && product?.on_sale){
+      //     regularPrice = product?.prices?.regular_price;
+      //     selePrice =product.prices?.sale_price;
+      // }
+
+      regularPrice =
         product.type === "simple"
-          ? product.prices.regular_price
-          : product.on_sale
-          ? product.prices.price_range.max_amount
-          : product.prices.regular_price;
+          ? product?.prices?.regular_price
+          : product?.on_sale
+          ? product.prices?.price_range
+            ? product.prices?.price_range?.max_amount
+            : product.prices?.regular_price
+          : product.prices?.regular_price;
       regularPrice /= 100;
 
-      let selePrice =
+      selePrice =
         product.type === "simple"
-          ? product.prices.sale_price
+          ? product.prices?.sale_price
           : product.on_sale
-          ? product.prices.price_range.min_amount
-          : product.prices.sale_price;
+          ? product.prices?.price_range
+            ? product.prices?.price_range?.min_amount
+            : product.prices?.sale_price
+          : product.prices?.sale_price;
 
       selePrice /= 100;
       const discountInPercentage = Math.floor(

@@ -13,7 +13,7 @@ const buttons = [
     onclick: () => {
       NavigationController.validateActiveNavigator();
       window.activeNavigator.push(PAGES.home).then((event) => {
-        console.log("page has pushed to top", event);
+        // console.log("page has pushed to top", event);
       });
     },
   },
@@ -26,7 +26,7 @@ const buttons = [
     onclick: () => {
       NavigationController.validateActiveNavigator();
       window.activeNavigator.push(PAGES.catagories).then((event) => {
-        console.log("page has pushed to top", event);
+        // console.log("page has pushed to top", event);
       });
     },
   },
@@ -42,7 +42,7 @@ const buttons = [
     onclick: () => {
       NavigationController.validateActiveNavigator();
       window.activeNavigator.push(PAGES.search).then((event) => {
-        console.log("page has pushed to top", event);
+        // console.log("page has pushed to top", event);
       });
     },
   },
@@ -59,7 +59,7 @@ const buttons = [
     onclick: () => {
       NavigationController.validateActiveNavigator();
       window.activeNavigator.push(PAGES.cart).then((event) => {
-        console.log("page has pushed to top", "eevent", event);
+        // console.log("page has pushed to top", "eevent", event);
       });
     },
   },
@@ -72,7 +72,7 @@ const buttons = [
     onclick: () => {
       NavigationController.validateActiveNavigator();
       window.activeNavigator.push(PAGES.account).then((event) => {
-        console.log("page has pushed to top", event);
+        // console.log("page has pushed to top", event);
       });
     },
   },

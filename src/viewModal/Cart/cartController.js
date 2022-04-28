@@ -6,6 +6,7 @@ import { decodeHtml, calculateDiscount } from "../../utils/sanitize";
 import { toast } from "../../utils/notification";
 import { updateCartCount } from "../Navigation/bottomNavigationController";
 import CheckoutController from "../Checkout/CheckoutController";
+import OrderController from "../Order/OrderController";
 
 import { CART_PAGE_ID } from "../../config";
 
@@ -222,17 +223,31 @@ export default class CartController {
         this.cartUpdateError(error.message);
       });
   }
-
+  /**
+   * the flow
+   * 1. user click on checkout button
+   * 2. request will be send to checkout end point for current order number as async req
+   * 3. in app browser will be launched to checkout page
+   * 4. if the previous req is faild the iab will get close
+   * 5. after the iab is closed the the cart will get updated asyncly
+   * 6. another request to order end point wil be made with previously retrieved order id
+   *    the request will only made if the previous req is success so Promise.resolve is used
+   * 7. if the order is successfull the user will be redirected to order page
+   *
+   * @param {*} cart takes cart object and perform checkout
+   * @returns
+   */
   async checkout(cart) {
     // empty cart return
     if (cart?.items?.length < 1)
       return toast("Please fill the cart first.", 4000);
     // show loader
     window.ajaxloader.show();
-
-    // chechout controller intantiation
-    const checkout = new CheckoutController();
-
+    let checkout;
+    if (window.cordova.platformId !== "browser") {
+      // chechout controller intantiation
+      checkout = new CheckoutController();
+    }
     //first request for checkout rest api and if it faild cancel the iab window
 
     let abortCheckout = false; // thi is used to avaoid execution of iab clossing error function
@@ -247,11 +262,12 @@ export default class CartController {
     };
 
     // calling cart modal and check can perform checkout or not just like fetch preflight request
-    CartModal.checkout(data, headers)
+    const checkoutDetails = CartModal.checkout(data, headers)
       .then((res) => {
         console.log({ checkoutData: res });
         if (res.error) throw new Error(res.error);
         currentOrder = res;
+        return res;
       })
       .catch((error) => {
         // when there is an error we need to destroy iab instatnce
@@ -259,25 +275,55 @@ export default class CartController {
         checkout.destroy();
         toast(error.message, 4000);
         window.ajaxloader.hide();
+        return error;
       });
 
     // initializing checkout iab will be launched soon
     let checkoutResult;
-    try {
-      checkoutResult = await checkout.init();
-      console.log({ checkoutResult });
-    } catch (errorFromIab) {
-      console.log({ errorFromIab });
+    let orderId = null;
+    if (window.cordova.platformId !== "browser") {
+      try {
+        checkoutResult = await checkout.init();
+        window.ajaxloader.show();
+        console.log({ checkoutResult });
+        if (checkoutResult.success) orderId = checkoutResult.orderId;
+      } catch (errorFromIab) {
+        console.trace({ errorFromIab });
+        if (errorFromIab.code === "payment_faild") updateCart();
+        this.cartUpdateError(errorFromIab.message);
+      }
     }
 
     if (abortCheckout) {
       toast("Checkout aborted", 4000);
       return window.ajaxloader.hide(); // if the request is aborted then exit the callback
     }
+
+    /**
+     * wait until the checkout is completed or cancelled and until the request
+     *for the current checkout/order details finishes
+     */
+    Promise.resolve(checkoutDetails).then(() => {
+      if (!orderId) return;
+      // check the newly created order with server
+      OrdersModal.getOrder({ id: orderId, auth: headers })
+        .then((res) => {
+          if (res.order_status !== "processing") {
+            //TODO
+            throw new Error("Checkout failed. Please try again.");
+          }
+
+          toast("Order has placed.");
+          res.message = `Thank you for shopping with us. Your order has been placed.`;
+          return new OrderController(res);
+        })
+        .catch((error) => {
+          this.cartUpdateError(error.message);
+        });
+    });
+
     // now we need to check the checkout result regardless of the iab output
     this.updateCart();
-
-    // check the newly created order with server
 
     return;
   }
@@ -301,7 +347,6 @@ export default class CartController {
   }
   //setting new cart data to modal and view
   updateCartData(cart) {
-    console.log({ fromUpdateCartFunction: cart });
     if (cart.error) throw new Error(cart.error);
     CartModal.set(cart); // update cart in storage
     updateCartCount(cart.items_count); // update iem count in bottom navigaton bar
@@ -312,7 +357,8 @@ export default class CartController {
   cartUpdateError(message) {
     toast(message, 4000);
     window.ajaxloader.hide();
-    throw new Error(message);
+    // throw new Error(message);
+    console.error(message);
   }
 
   refreshCart() {

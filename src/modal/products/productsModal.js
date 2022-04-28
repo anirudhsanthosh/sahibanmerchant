@@ -7,7 +7,15 @@ export default class ProductsModal {
       const queryString = toQueryString(query);
       const url = SITE + API_URL + PRODUCTS_NODE + "?" + queryString;
 
-      const data = await axios.get(url, {
+      // const data = await axios.get(url, {
+      //   headers: {
+      //     ...auth,
+      //   },
+      // });
+
+      // use catched method available on window.api
+      const data = await window.api.get(url, {
+        // params: query,
         headers: {
           ...auth,
         },

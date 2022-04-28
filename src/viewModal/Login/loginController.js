@@ -5,9 +5,11 @@ import userModal from "../../modal/user/userModal";
 
 // controller
 import dataController from "../DataController/mainDataController";
+import ForgotPasswordController from "../ForgotPassword/ForgotPasswordController";
 
 import { PAGES } from "../../config";
 import NavigationController from "../Navigation/navigationController";
+import SignUpController from "../SignUp/SignUpController";
 
 export default async function loginController() {
   // if previously logged in and that credentials is valid go to home
@@ -104,9 +106,10 @@ let onLoginButtonClick = async (username, password) => {
 };
 
 let onSignupButtonClick = async () => {
+  new SignUpController();
   console.log("goto signup");
 };
 let onForgotPasswordButtonClick = async () => {
   console.log("goto forgot password");
-  window.scrollTo(500, 0);
+  new ForgotPasswordController();
 };

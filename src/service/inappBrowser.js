@@ -18,35 +18,47 @@ export default class Browser {
   #errorOccuredWhileLoading = false;
   #loadErrorMessage = "";
   #failedPayment = false;
+  #orderId = null;
+  #logouting = false;
 
-  constructor({ url, headers }) {
+  constructor({ url, headers, logouting = false }) {
     this.#url = url;
     this.#headers = headers;
+    this.#logouting = logouting;
+    console.log({ url, headers, logouting });
   }
   init() {
+    console.time("inappBrowser");
     return new Promise((resolve, reject) => {
-   
-    this.#browser = cordova.InAppBrowser.open(
-      this.#url,
-      this.#target,
-      this.#options
-    );
+      if (!this.#logoutOptions) {
+        this.#browser = cordova.InAppBrowser.open(
+          this.#url,
+          this.#target,
+          this.#logoutOptions
+        );
+      } else {
+        this.#browser = cordova.InAppBrowser.open(
+          this.#url,
+          this.#target,
+          this.#options
+        );
+      }
 
-    this.#browser.addEventListener("loadstart", this.#loadstart);
+      window.aaa = this;
+      this.#browser.addEventListener("loadstart", this.#loadstart);
 
-    this.#browser.addEventListener("loadstop", this.#loadstop);
+      this.#browser.addEventListener("loadstop", this.#loadstop);
 
-    this.#browser.addEventListener("loaderror", this.#loaderror);
+      this.#browser.addEventListener("loaderror", this.#loaderror);
 
-    this.#browser.addEventListener("beforeload", this.#beforeload);
+      this.#browser.addEventListener("beforeload", this.#beforeload);
 
-    this.#browser.addEventListener("message", this.#message);
+      this.#browser.addEventListener("message", this.#message);
 
-    this.#browser.addEventListener("exit", this.#exit);
+      this.#browser.addEventListener("exit", this.#exit);
 
-    window.activeBrowser = this;
+      window.activeBrowser = this;
 
-    
       this.#resolve = resolve;
       this.#reject = reject;
     });
@@ -60,6 +72,7 @@ export default class Browser {
   #loadstop = (event) => {
     // console.log("loadStopCallBack:::::::::", event);
     if (this.#browser == undefined) return;
+    if (this.#logouting) this.close();
     // this.#browser.insertCSS({ code: this.#css });
     this.#browser.executeScript(
       { code: this.#script() },
@@ -97,6 +110,7 @@ export default class Browser {
         return this.close();
         break;
       case "show":
+        console.timeLog("inappBrowser");
         return this.#browser.show();
         break;
       case "hide":
@@ -117,6 +131,7 @@ export default class Browser {
         break;
       case "paymentSuccess":
         this.#paymentSuccess = true;
+        this.#orderId = event?.data?.orderId;
         break;
       case "failedPayment":
         this.#failedPayment = true;
@@ -134,12 +149,13 @@ export default class Browser {
    */
   #exit = (event) => {
     // console.log("exitCallback::::::::::::", event);
-
+    console.timeEnd("inappBrowser");
     const template = {
       error: true,
       success: false,
       message: "Checkout aborted.",
       code: "checkout_aborted",
+      orderId: this.#orderId,
     };
 
     if (this.#paymentSuccess) {
@@ -220,8 +236,18 @@ export default class Browser {
       if(!isHomeSite()) return show(); // if this is not homesite then show iab
 
       if(isLogged()) {
+        try{
+
+          transformSite();
+        }catch(e){
+
+        }
         loggedIn(); // send user is logged in message back to app
-        if(isOrderRecieved()) orderRecieved();// send order recieved to app
+        if(isOrderRecieved()){
+          const orderId = document.querySelector('#orderId').textContent;
+
+          orderRecieved(orderId);// send order recieved to app
+        } 
         if(isOrderPaymentStage()) orderPaymentStage();// send user has reached payment page to app
         if(isPaymentFailed()) return paymentFailed(); // check the payment has faild or not befor returning true for checkout
         return goToCheckout(); // hence the user is logged in mve location to checkout
@@ -233,7 +259,12 @@ export default class Browser {
       // filll data in the login form
       fillData(auth);
     }
-    validateSite();
+    try{
+      validateSite();
+    }catch(e){
+      // exit();
+      message({error : e})
+    }
 
     // find we are logged in or not if logged in then move to checkout
 
@@ -306,9 +337,10 @@ export default class Browser {
       message(msg);
     }
 
-    function orderRecieved(){
+    function orderRecieved(orderId){
       const msg ={
         state : "paymentSuccess",
+        orderId,
       }
       message(msg);
       setTimeout(()=>{exit()},2000); // exit iab after 2s;
@@ -333,8 +365,44 @@ export default class Browser {
       message(msg);
       setTimeout(()=>{exit()},2000); // exit iab after 2s;
     }
+    function  orderIdRecieved(orderId){
+      const msg ={
+        state : "orderId",
+        id : orderId,
+      }
+      message(msg);
+      setTimeout(()=>{exit()},2000); // exit iab after 2s;
+    }
 
-
+    function transformSite(){
+      try{
+        document.querySelector('#wpadminbar').style.display='none';
+      }catch(e){}
+      try{
+        document.querySelector('#masthead').style.display='none'
+      }catch(e){}
+      try{
+        document.querySelector('.storefront-breadcrumb').style.display='none'
+      }catch(e){}
+      try{
+        document.querySelector('footer#colophon').style.display='none'
+      }catch(e){}
+      try{
+        document.querySelector('.edit-link').style.display='none'
+      }catch(e){}
+      try{
+        const prefStyle = \`input[type=text], input[type=number], input[type=email], input[type=tel], input[type=url], input[type=password], input[type=search], textarea, .input-text, select {
+          background: #fff;
+          border: 1px solid #aaa;
+          border-radius: 5px;
+        }\`;
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.appendChild(document.createTextNode(prefStyle));
+        document.head.appendChild(style);
+        
+      }catch(e){}
+    }
   
   `;
   }

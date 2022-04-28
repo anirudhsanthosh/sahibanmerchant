@@ -1,0 +1,12 @@
+ons-input.invalid {
+  background: #ff00001c;
+}
+
+.thank-you,
+.forgot-password-thank-you {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+}

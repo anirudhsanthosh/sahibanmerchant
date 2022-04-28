@@ -44,7 +44,8 @@
   padding: 1rem 0.25rem;
 }
 
-ons-button#goTocreateAccountpage {
+ons-button#goTocreateAccountpage,
+#signUp-button {
   background: #ed1d23;
 }
 

@@ -1,5 +1,6 @@
-import { PAGES } from "../../config";
+import { PAGES, ONS_NAVIGATOR_ID } from "../../config";
 import homepageController from "../HomePage/homePageContrloler";
+import Navigator from "../../service/navigator";
 
 export default class NavigationController {
   static async resetToHome(config = {}) {
@@ -30,7 +31,7 @@ export default class NavigationController {
 
   static validateActiveNavigator() {
     window.activeNavigator =
-      window.activeNavigator ?? new NavigationController();
+      window.activeNavigator ?? new Navigator(ONS_NAVIGATOR_ID);
   }
 
   static get topPage() {
@@ -44,4 +45,11 @@ export default class NavigationController {
   static get pages() {
     return window.activeNavigator.pages;
   }
+  // static removeAllpagesFromStack(){
+  //   const pages = this.pages();
+  //   pages.map((page,index)=> {
+  //     if(page.id !== 'home') window.activeNavigator.remove(index);
+
+  //   })
+  // }
 }

@@ -18,6 +18,9 @@ export default class Navigator {
   reset(page, options = {}) {
     if (page) return this.#navigator.resetToPage(page, options);
   }
+  remove(id, options = {}) {
+    return this.#navigator.removePage(id, options);
+  }
 
   get topPage() {
     return this.#navigator.topPage;

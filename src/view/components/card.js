@@ -139,8 +139,16 @@ export function cartItemCard(config = {}) {
   //right
   const bodyRight = createElement("div", ["cart-item-card-item-body-right"]);
   // image in the card
-  const image = createElement("img", ["cart-item-card-image"]);
-  image.src = config.image;
+  const image = createElement("img", ["cart-item-card-image"], {
+    loading: "lazy",
+  });
+  // image.src = config.image;
+  if (config.image) {
+    window.fileCacheAdaptor
+      .get(config.image)
+      .then((url) => (image.src = url))
+      .catch(() => (image.src = config.image));
+  }
 
   //quantity input box
   const quantityContainer = createElement("div", ["quantity-wrapper"]);

@@ -181,8 +181,14 @@ export default class cratecategoryGrid {
 
       if (category.image) {
         let src = category.image.src;
-        img = document.createElement("img");
-        img.src = src;
+        img = document.createElement("img", [], { loading: "lazy" });
+
+        if (src) {
+          window.fileCacheAdaptor
+            .get(src)
+            .then((url) => (img.src = url))
+            .catch(() => (img.src = src));
+        }
       } else {
         img = document.createElement("div");
         img.classList.add("img", "imgAlt");
