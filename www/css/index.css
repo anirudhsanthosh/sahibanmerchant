@@ -1,45 +1,99 @@
+@import "includes/root.css";
+@import "includes/margin-paddding.css";
+@import "includes/onser-override.css";
+@import "includes/card.css";
 @import "includes/slider.css";
+@import "includes/homepage.css";
 @import "includes/splashScreen.css";
 @import "includes/loader.css";
 @import "includes/home-page-category.css";
 @import "includes/reload.css";
 @import "includes/bottom-navigation.css";
 @import "includes/search.css";
-*{
+@import "includes/login.css";
+@import "includes/products.css";
+@import "includes/buttons.css";
+@import "includes/products-display-page.css";
+@import "includes/splide.min.css";
+@import "includes/splideOverrides.css";
+@import "includes/productPage.css";
+@import "includes/cart.css";
+@import "includes/progressBar.css";
+@import "includes/account.css";
+@import "includes/orders.css";
+@import "includes/signup.css";
+@import "includes/categories.css";
+
+* {
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: popins, Roboto, sans-serif;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
 }
 
+section {
+  padding: 0.5rem;
+  max-width: 100vw;
+}
+
+.section-container {
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.5rem;
+  box-shadow: var(--elevated-shadow);
+}
+
+.elevated-shadow {
+  box-shadow: 0px 0px 10px -4px rgb(0 0 0 / 46%);
+}
+
+section h5,
+section h6 {
+  margin-block-start: 0px !important;
+  margin-block-end: 0px !important;
+  /* font-weight: bold !important; */
+  color: #22b066;
+  /* font-size: 90%; */
+  padding: 0px 0.5rem !important;
+  padding-top: 0.25rem !important;
+}
+
+.page__content {
+  padding-bottom: 10vh;
+}
 /* main llogo */
 
-.main-logo{
-    width:100%;
-    
+.main-logo {
+  width: 100%;
 }
 
 /*  offer container */
-.offfers{
+.offfers {
   padding: 0.5rem 0rem;
 }
 
-.skelton-loader{
+.skelton-loader {
   display: block;
-  background: linear-gradient(90deg, transparent,rgba(255, 255, 255, 0.2), transparent),rgb(230, 230, 230);
-  background-repeat: repeat-y;        
-  background-size: 50px 200px;        
-  background-position: -100% -100%; 
-  animation: shine 1s infinite;	  
-
+  background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    ),
+    rgb(230, 230, 230);
+  background-repeat: repeat-y;
+  background-size: 50px 200px;
+  background-position: -100% -100%;
+  animation: shine 1s infinite;
 }
 
-@keyframes shine {	
+@keyframes shine {
   to {
     background-position: 100% 100%;
   }
 }
 
 .skeleton-loader-gradient {
-
   display: block;
   /* background: linear-gradient(
       to right,
@@ -48,14 +102,20 @@
       rgba(255, 255, 255, 0) 80%
     ),
     lightgray; */
-  background: linear-gradient(90deg, transparent,rgba(255, 255, 255, 0.2), transparent),rgb(219, 212, 212);
-  background-repeat: repeat-y;        
-  background-size: 50px 200px;        
-  background-position: -100% -100%;           
+  background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    ),
+    rgb(219, 212, 212);
+  background-repeat: repeat-y;
+  background-size: 50px 200px;
+  background-position: -100% -100%;
 }
 
-.toolbar-header{
-  font-weight: bold;
+.toolbar-header {
+  /* font-weight: bold; */
   text-transform: capitalize;
   padding: 0rem 0.25rem;
   color: #22b066;
@@ -63,4 +123,69 @@
 
 .page__content.page--material__content {
   padding-bottom: 3.5rem;
+}
+
+span.cart-count {
+  position: absolute;
+  padding: 0.25rem;
+  background: #22b066;
+  color: #fff;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  top: 0.25rem;
+}
+
+.active span#cart-count {
+  background: #31313a;
+}
+
+.chip {
+  border: 1px solid #e5e5e5;
+  box-shadow: 0px 1px 11px -8px rgb(0 0 0 / 30%);
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 90%;
+  transition: all 0.15s;
+  color: var(--theme-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chip:hover,
+.chip:focus {
+  box-shadow: 0px 3px 11px -5px rgb(0 0 0 / 30%);
+  border-color: #e2e2e2;
+}
+
+.greettings-message {
+  padding: 1rem 1rem;
+  font-size: 1.6rem;
+}
+
+.form-control {
+  padding: 0.5rem;
+  width: 100%;
+}
+.form-control label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: small;
+}
+.form-control input[type="text"],
+.form-control input[type="password"] {
+  width: 100%;
+  margin-bottom: 0.25rem;
+  border: 1px solid #e0e0e0;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+.form-control input[type="text"]:disabled {
+  background: rgb(248, 248, 248);
+}
+
+.d-none {
+  display: none;
 }

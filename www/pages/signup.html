@@ -1,0 +1,103 @@
+<ons-page id="signup">
+  <!-- Toolbar here -->
+
+  <div class="content">
+    <div class="login-container">
+      <div class="login-card">
+        <!-- Scrollable content here -->
+
+        <img class="loginpage-logo" src="/img/header_logo.svg" />
+
+        <div class="login-form" id="signup-form">
+          <p id="loginMessage"></p>
+          <div class="form-control">
+            <ons-input
+              id="firstName"
+              modifier="underbar"
+              placeholder="First Name"
+              aria-autocomplete="none"
+              float
+              value=""
+            ></ons-input>
+          </div>
+          <div class="form-control">
+            <ons-input
+              id="lastName"
+              modifier="underbar"
+              placeholder="Last Name"
+              aria-autocomplete="none"
+              float
+              value=""
+            ></ons-input>
+          </div>
+          <div class="form-control">
+            <ons-input
+              id="email"
+              modifier="underbar"
+              placeholder="Email"
+              aria-autocomplete="none"
+              float
+              value=""
+              type="email"
+            ></ons-input>
+          </div>
+          <div class="form-control">
+            <ons-input
+              id="username"
+              modifier="underbar"
+              placeholder="Username"
+              aria-autocomplete="none"
+              float
+              value=""
+            ></ons-input>
+          </div>
+          <div class="form-control">
+            <ons-input
+              id="phone"
+              modifier="underbar"
+              placeholder="Phone"
+              aria-autocomplete="none"
+              float
+              type="telephone"
+              value=""
+            ></ons-input>
+          </div>
+          <div class="form-control">
+            <ons-input
+              id="password"
+              modifier="underbar"
+              type="text"
+              placeholder="Password"
+              float
+              value=""
+            ></ons-input>
+          </div>
+          <div class="form-control">
+            <ons-input
+              id="confirmpassword"
+              modifier="underbar"
+              type="text"
+              placeholder="Confirm Password"
+              float
+              value=""
+            ></ons-input>
+          </div>
+          <div class="form-control mt-4">
+            <ons-button modifier="large" class="" id="signUp-button"
+              >Sign up</ons-button
+            >
+            <ons-button modifier="large" class="mt-3" id="backtologinButton"
+              >Log in</ons-button
+            >
+          </div>
+        </div>
+        <div class="thank-you d-none">
+          <h2>Registration success, please go back to login page.</h2>
+          <ons-back-button>Back</ons-back-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fixed content here -->
+</ons-page>

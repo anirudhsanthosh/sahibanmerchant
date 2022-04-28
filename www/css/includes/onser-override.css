@@ -1,0 +1,92 @@
+@import "./root.css";
+
+.page--material__background,
+.page__background {
+  background-color: #ffffff;
+}
+.toolbar--material {
+  box-shadow: 0px 0px 1px rgb(0 0 0 / 30%);
+}
+
+.button.button--material--flat,
+.button.button--material--flat:active {
+  color: var(--theme-color);
+  background: transparent;
+}
+
+.button,
+.button:active,
+.button--material:active,
+.button--material {
+  background: var(--theme-color);
+}
+
+.text-input--material__label--active {
+  color: var(--theme-color);
+}
+.text-input--material:focus {
+  background-image: linear-gradient(var(--theme-color), var(--theme-color)),
+    linear-gradient(to top, transparent 1px, #afafaf 1px);
+  background-image: linear-gradient(var(--theme-color), var(--theme-color)),
+    linear-gradient(to top, transparent 1px, #afafaf 1px);
+  -webkit-animation: material-text-input-animate 0.3s forwards;
+  animation: material-text-input-animate 0.3s forwards;
+}
+
+/* font */
+
+.text-input--material,
+.button--material,
+.page--material__content h1,
+.page--material__content h2,
+.page--material__content h3,
+.page--material__content h4,
+.page--material__content h5 {
+  font-family: popins;
+  font-size: 95%;
+}
+
+.toolbar.toolbar--material + .page__background + .page__content {
+  overflow-x: hidden;
+}
+
+.text-input--material__label {
+  font-family: Popins, Roboto, Noto, sans-serif;
+}
+
+.back-button--material__icon {
+  fill: var(--theme-color);
+}
+
+ons-progress-bar.progress-bar.progress-bar--indeterminate.progress-bar--material {
+  height: 2px;
+}
+.progress-bar--material.progress-bar--indeterminate:before,
+.progress-bar--material.progress-bar--indeterminate:after {
+  background-color: var(--theme-color);
+}
+
+ons-icon.ons-icon.action-sheet-icon.action-sheet-icon--material {
+  color: var(--theme-color);
+}
+
+.progress-circular--material__primary {
+  stroke: #37474f;
+  stroke: var(--theme-color);
+}
+
+.toast--material {
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 16px 24px;
+  width: 96%;
+  margin: auto;
+}
+ons-button ons-icon {
+  margin-right: 0.5rem;
+}

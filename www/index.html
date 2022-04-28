@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-        <meta name="color-scheme" content="light dark">
-        <link rel="stylesheet" href="css/onsen/onsenui.css" />
-        <link rel="stylesheet" href="css/onsen/onsen-css-components.min.css" />
-        <link rel="stylesheet" href="css/index.css">
-        <!-- <link rel="stylesheet" href="css/slider.css"> -->
+  <head>
+    <meta charset="utf-8" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, width=device-width, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="light dark" />
 
-        <title>sahiban merchant</title>
-    </head>
-    <body>
-        <ons-navigator id="navigator" page="pages/home.html"></ons-navigator>
-        <ons-bottom-toolbar id ="bottomNav">
-            <div class="bottomNav-container" id="bottomNav-container"></div>
-        </ons-bottom-toolbar>
+    <!-- remove this tag in production -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
 
-        <div class="splashScreen"></div>
-        <div class="loader"></div>
-        <div class="reloader"></div>
-        
-        <script src="cordova.js"></script>
-        <script src="js/axios.min.js"></script>
-        <script src="js/onsenui.min.js"></script>
-        <script src="js/aes.js"></script>
-        <script type="module" src="js/index.js" defer></script>
-        <!-- <script src="js/index.bundle.js"></script> -->
- 
-    </body>
+    <link rel="stylesheet" href="css/onsen/onsenui.css" />
+    <link rel="stylesheet" href="css/onsen/onsen-css-components.min.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <!-- <link rel="stylesheet" href="css/slider.css"> -->
+
+    <title>sahiban merchant</title>
+  </head>
+  <body>
+    <ons-navigator id="navigator"></ons-navigator>
+    <!-- page="pages/login.html" -->
+    <ons-bottom-toolbar id="bottomNav">
+      <div class="bottomNav-container" id="bottomNav-container"></div>
+    </ons-bottom-toolbar>
+
+    <div class="splashScreen"></div>
+    <div class="loader"></div>
+    <div class="reloader"></div>
+
+    <script src="cordova.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/onsenui.min.js"></script>
+    <script src="js/aes.js"></script>
+
+    <script src="js/index.bundle.js"></script>
+  </body>
 </html>

@@ -1,0 +1,12 @@
+.page-progress-bar.hide {
+  display: none;
+}
+.page-progress-bar {
+  position: sticky;
+  top: 0px;
+  padding: 0.06rem;
+  z-index: 2;
+}
+.progress-bar.progress-bar--material.progress-bar--indeterminate {
+  height: 2px;
+}

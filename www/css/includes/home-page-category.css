@@ -1,106 +1,120 @@
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+}
 
-.categoryGrid{
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: 1fr;
-  }
-  
-  .categoryGrid a,.categoryGrid .a{
-    /* position: relative; */
-    padding :0.25rem;
-    text-decoration: none;
-    text-decoration-color: none;
-  }
-  .categoryCell{
-    width: 100%;
-    height:100%;
-    
-  }
-  .categoryCell img, .categoryCell .img{
-    width:100%;
-    border-radius: 5px;
-    color:#fff;
-    text-transform: capitalize;
-    font-size: 150%;
-    font-weight: bold;
-    text-align: center;
-  }
-  .categoryCell .img{
-    height:calc(100vw*0.3);
-  }
-  .categoryCell .imgAlt{
-    height:100%;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-  }
+.categoryGrid a,
+.categoryGrid .a {
+  /* position: relative; */
+  padding: 0.5rem 0.7rem;
+  text-decoration: none;
+  text-decoration-color: none;
+}
+.categoryCell {
+  width: 100%;
+  height: 100%;
+}
+.categoryGridImage {
+  width: 50%;
+}
 
-  .categoryCell .categoryHero, .categoryCell .categoryHero-skelton{
-    width:100%;
-    text-align: center;
-    font-size: 70%;
-    text-transform: capitalize;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    background: #22b066;
-    color:#FFFFFF;
-    padding: 0.1rem;
-    border-radius: 0px 0px 5px 5px;
-  }
+.categoryCell img,
+.categoryCell .img {
+  width: 65%;
+  border-radius: 5px;
+  color: #fff;
+  text-transform: capitalize;
+  font-size: 150%;
+  font-weight: bold;
+  text-align: center;
+}
+.categoryCell .img {
+  height: calc(100vw * 0.3);
+}
+.categoryCell .imgAlt {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .categoryCell .categoryHero-skelton{
-    background: #868686!important;
-    padding:0.25rem;
-    display:flex;
-    justify-content: center;
-  }
+.img.skelton-loader {
+  width: 100%;
+}
 
-  .categoryCell .categoryHero-skelton .categoryHero-skelton-span{
-    width:70%;
-    height:0.2rem;
+.categoryCell .categoryHero,
+.categoryCell .categoryHero-skelton {
+  width: 100%;
+  text-align: center;
+  font-size: 70%;
+  text-transform: capitalize;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  background: #22b066;
+  color: #ffffff;
+  padding: 0.1rem;
+  border-radius: 0px 0px 5px 5px;
+}
 
-  }
+.categoryCell .categoryHero-skelton {
+  background: #868686 !important;
+  padding: 0.25rem;
+  display: flex;
+  justify-content: center;
+}
 
+.categoryCell .categoryHero-skelton .categoryHero-skelton-span {
+  width: 70%;
+  height: 0.2rem;
+}
 
-  .categoryCard{
-    width:100%;
-    height:100%;
-    border:0px solid rgba(0,0,0,0.05);
-    border-radius: 5px;
-    /* padding: 0.25rem; */
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.1) ;
-    position: relative;
-    
-  }
+.categoryCard {
+  width: 100%;
+  height: 100%;
+  border: 0px solid rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  background: #c1ebd5;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
 
-  .skelton-list{
-    /* background: #868686; */
-  }
+.categoryImageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 25vw;
+}
 
-  .skelton-list .skelton-name{
-    width:70%;
-    height: .6rem;
-  }
+.skelton-list {
+  /* background: #868686; */
+}
 
-    /* styles for categorypage */
-  .catagoryList-main-item{
-    font-weight: 550;
-    /* color:#22b066; */
-    font-size: 120%;
-  }
-  #catagoriesPageDisplay{
-    padding-top: 3rem;
-  }
-  .list-item--material__thumbnail {
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 2px 2px 20px -12px #0000005e;
-  }
+.skelton-list .skelton-name {
+  width: 70%;
+  height: 0.6rem;
+}
 
-  .category-list-image{
-    width:70px;
-    height:70px;
-  }
-  .category-list-name{
-    padding-left: 1rem;
-  }
+/* styles for categorypage */
+.catagoryList-main-item {
+  font-weight: 550;
+  /* color:#22b066; */
+  font-size: 120%;
+}
+#catagoriesPageDisplay {
+  padding-top: 3rem;
+}
+.list-item--material__thumbnail {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 20px -12px #0000005e;
+}
+
+.category-list-image {
+  width: 70px;
+  height: 70px;
+}
+.category-list-name {
+  padding-left: 1rem;
+}

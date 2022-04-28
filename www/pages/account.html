@@ -1,0 +1,68 @@
+<ons-page id="account">
+  <ons-toolbar id="account-toolbar" class="product-page-toolbar">
+    <div class="left">
+      <ons-back-button>Back</ons-back-button>
+    </div>
+    <div class="center">Account</div>
+  </ons-toolbar>
+
+  <div id="account-display">
+    <section class="greeting-section">
+      <p class="greettings-message">
+        Hello, <strong class="display-name"></strong>
+      </p>
+    </section>
+
+    <section class="account-settings">
+      <div class="section-container">
+        <h5>Account Settings</h5>
+        <ul class="notification-container"></ul>
+        <div class="account-form">
+          <div class="form-control">
+            <label>First Name</label>
+            <input id="firstname" type="text" disabled />
+          </div>
+          <div class="form-control">
+            <label>Last Name</label>
+            <input id="lastname" type="text" disabled />
+          </div>
+          <div class="form-control">
+            <label>Display Name</label>
+            <input id="displayname" type="text" disabled />
+          </div>
+          <div class="form-control">
+            <label>Email</label>
+            <input id="email" type="text" disabled />
+          </div>
+          <div class="form-control">
+            <label>Phone</label>
+            <input id="phone" type="text" disabled />
+          </div>
+        </div>
+        <div class="form-actions">
+          <ons-button modifier="quiet" id="edit-account-details"
+            >Edit</ons-button
+          >
+          <ons-button modifier="" id="save-account-details" class="d-none"
+            >Save</ons-button
+          >
+          <ons-button modifier="quiet" id="cancel-account-details-edit"
+            >Cancel</ons-button
+          >
+        </div>
+      </div>
+      <div class="cart-item-loader">
+        <ons-icon
+          icon="md-spinner"
+          spin=""
+          class="ons-icon zmdi zmdi-spinner"
+          modifier="material"
+        ></ons-icon>
+      </div>
+    </section>
+  </div>
+  <section class="bottom-drawer">
+    <a class="chip accoun-action-button" id="orders-button">Orders</a>
+    <a class="chip accoun-action-button" id="logout-button">Log out</a>
+  </section>
+</ons-page>
